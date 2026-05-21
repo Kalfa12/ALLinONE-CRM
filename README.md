@@ -66,17 +66,6 @@ docs/
   report/            LaTeX cahier des charges (compiles with pdflatex)
 ```
 
-## Building the academic report
-
-```bash
-cd docs/report
-pdflatex main.tex && pdflatex main.tex   # twice for the TOC
-```
-
-Mermaid diagrams in `docs/diagrams.md` render natively on GitHub. To
-embed them as images in the LaTeX report, install
-[`@mermaid-js/mermaid-cli`](https://github.com/mermaid-js/mermaid-cli)
-and run `mmdc -i docs/diagrams.md -o docs/report/figures/diag.png`.
 
 ## DeepSeek chatbot — design note
 

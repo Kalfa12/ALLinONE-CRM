@@ -1,0 +1,69 @@
+\section{Étude de l'existant}
+\label{sec:existant}
+
+Avant de spécifier la solution, nous avons analysé les outils que les équipes
+marketing utilisent aujourd'hui, afin de comprendre pourquoi aucune
+combinaison de produits du marché ne couvre le besoin identifié.
+
+\subsection{Outils généralistes détournés}
+
+\begin{description}
+    \item[Trello / Notion] excellent pour le suivi visuel d'un pipeline,
+    mais aucune notion native de budget, de créatif ou de ROI. La
+    structuration des angles psychologiques doit être bricolée manuellement.
+
+    \item[Google Sheets] flexible et universel, mais ne supporte ni
+    l'upload de créatifs vidéo, ni l'historique structuré des messages d'un
+    chatbot, ni l'i18n proprement dite. Les formules de ROI deviennent
+    rapidement illisibles.
+
+    \item[Airtable] meilleur compromis tableur/SGBD, mais payant à grande
+    échelle et toujours dépourvu de couche IA contextualisée.
+\end{description}
+
+\subsection{CRM commerciaux}
+
+\begin{description}
+    \item[HubSpot, Salesforce] orientés \emph{vente B2B} (gestion des
+    leads, pipeline commercial). L'angle marketing de performance (créatifs,
+    hooks, A/B test d'angles) est totalement absent.
+
+    \item[Monday Marketer, Asana for Marketing] adressent la coordination
+    de projet, pas le pilotage data-driven d'une campagne ad-set par
+    ad-set.
+\end{description}
+
+\subsection{Plateformes natives des régies publicitaires}
+
+Meta Ads Manager, Google Ads et TikTok Ads offrent évidemment les meilleures
+analytics \emph{intra-plateforme}, mais (i)~elles ne consolident pas les
+données entre régies, (ii)~elles n'offrent aucune mémoire des angles ou
+hooks réutilisables, et (iii)~leur interface n'est ni multilingue de manière
+homogène, ni extensible par un assistant IA spécifique au métier.
+
+\subsection{Synthèse comparative}
+
+\begin{table}[H]
+    \centering
+    \footnotesize
+    \begin{tabularx}{\textwidth}{lcccccc}
+        \toprule
+        & \textbf{Pipeline} & \textbf{Assets} & \textbf{ROI} &
+        \textbf{i18n EN/FR/AR} & \textbf{Chatbot IA contextuel} &
+        \textbf{Prédiction ML}\\
+        \midrule
+        Trello              & \checkmark & --        & --        & partiel & -- & --\\
+        Google Sheets       & --        & --        & manuel    & --      & -- & --\\
+        HubSpot             & \checkmark & partiel  & partiel   & \checkmark & partiel & --\\
+        Meta Ads Manager    & --        & \checkmark & \checkmark & \checkmark & -- & --\\
+        \textbf{Notre CRM}  & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark\\
+        \bottomrule
+    \end{tabularx}
+    \caption{Comparaison de l'offre existante vs.~la solution proposée}
+    \label{tab:comparaison}
+\end{table}
+
+Le tableau~\ref{tab:comparaison} montre qu'aucune solution existante ne
+couvre simultanément les six dimensions retenues~; c'est ce \emph{vide de
+marché} que notre projet vise à combler à l'échelle d'un démonstrateur
+académique.

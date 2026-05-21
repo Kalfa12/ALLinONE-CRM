@@ -1,0 +1,179 @@
+\section{Implémentation}
+\label{sec:impl}
+
+Cette section présente les éléments d'implémentation les plus structurants
+du projet. Le code complet est disponible dans le dépôt~; nous nous
+limitons ici aux extraits qui répondent directement aux exigences
+académiques.
+
+\subsection{Configuration de l'internationalisation}
+
+La gestion des trois langues repose entièrement sur l'infrastructure
+\texttt{gettext} de Django.
+
+\begin{lstlisting}[language=Python,caption={Extrait de
+crm\_project/settings.py},label=lst:i18n]
+from pathlib import Path
+from django.utils.translation import gettext_lazy as _
+
+LANGUAGE_CODE = 'en'
+LANGUAGES = [
+    ('en', _('English')),
+    ('fr', _('French')),
+    ('ar', _('Arabic')),
+]
+USE_I18N = True
+USE_L10N = True
+LOCALE_PATHS = [BASE_DIR / 'locale']
+
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',  # <-- ordre critique
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+]
+\end{lstlisting}
+
+Le template de base bascule la direction d'écriture en RTL pour l'arabe~:
+
+\begin{lstlisting}[language=HTML,caption={templates/base.html (extrait)}]
+<html lang="{{ LANGUAGE_CODE }}"
+      dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}">
+\end{lstlisting}
+
+\subsection{Modèle d'un domaine clé --- la campagne}
+
+\begin{lstlisting}[language=Python,caption={apps/pipeline/models.py (extrait)}]
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+
+class Campaign(models.Model):
+    class Status(models.TextChoices):
+        DRAFT = 'draft', _('Draft')
+        RUNNING = 'running', _('Running')
+        DONE = 'done', _('Done')
+
+    product = models.ForeignKey(
+        'pipeline.Product', on_delete=models.CASCADE,
+        related_name='campaigns')
+    name = models.CharField(_('Name'), max_length=120)
+    start_date = models.DateField()
+    end_date = models.DateField(null=True, blank=True)
+    budget = models.DecimalField(max_digits=12, decimal_places=2)
+    status = models.CharField(max_length=10, choices=Status.choices,
+                              default=Status.DRAFT)
+
+    def total_spent(self):
+        return self.expenses.aggregate(s=models.Sum('amount'))['s'] or 0
+
+    def total_revenue(self):
+        return self.revenues.aggregate(s=models.Sum('amount'))['s'] or 0
+
+    def roi(self):
+        spent = self.total_spent()
+        if not spent:
+            return None
+        return (self.total_revenue() - spent) / spent * 100
+\end{lstlisting}
+
+\subsection{Intégration de l'API DeepSeek}
+
+Le service est volontairement minimaliste~: pas de SDK propriétaire, juste
+un appel HTTP. La compatibilité avec le format OpenAI permet d'utiliser le
+même schéma de messages.
+
+\begin{lstlisting}[language=Python,caption={apps/chatbot/services.py (extrait)}]
+import os, requests
+from django.conf import settings
+from .context import build_crm_context
+
+DEEPSEEK_URL = settings.DEEPSEEK_BASE_URL + '/chat/completions'
+
+def ask_deepseek(user, user_message, history, language='en'):
+    """Send a message to DeepSeek with live CRM context injected."""
+    facts = build_crm_context(user)  # top campaigns, ROI, best angle...
+
+    system_prompt = (
+        f"You are a marketing assistant. Reply in language={language}. "
+        f"Use ONLY these facts about the user's CRM:\n{facts}"
+    )
+    payload = {
+        'model': settings.DEEPSEEK_MODEL,
+        'messages': [
+            {'role': 'system', 'content': system_prompt},
+            *history,
+            {'role': 'user', 'content': user_message},
+        ],
+        'stream': False,
+        'temperature': 0.4,
+    }
+    headers = {'Authorization': f'Bearer {settings.DEEPSEEK_API_KEY}'}
+    r = requests.post(DEEPSEEK_URL, json=payload, headers=headers, timeout=30)
+    r.raise_for_status()
+    return r.json()['choices'][0]['message']['content']
+\end{lstlisting}
+
+\subsection{Modèle prédictif --- catégorisation du potentiel}
+
+Le pipeline d'apprentissage est isolé dans \texttt{ml/train.py}, ce qui
+permet de ré-entraîner sans toucher à l'application web.
+
+\begin{lstlisting}[language=Python,caption={ml/train.py (extrait)}]
+import joblib, pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report
+
+df = pd.read_csv('ml/seed_data.csv')
+X = pd.get_dummies(df.drop(columns=['potential']))
+y = df['potential']  # Low / Medium / High
+
+Xtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.2, random_state=42)
+clf = RandomForestClassifier(n_estimators=200, random_state=42)
+clf.fit(Xtr, ytr)
+print(classification_report(yte, clf.predict(Xte)))
+
+joblib.dump({'model': clf, 'columns': X.columns.tolist()}, 'ml/model.pkl')
+\end{lstlisting}
+
+Le service d'inférence charge le modèle une seule fois au démarrage~:
+
+\begin{lstlisting}[language=Python,caption={apps/prediction/services.py (extrait)}]
+import joblib, pandas as pd
+from functools import lru_cache
+
+@lru_cache(maxsize=1)
+def _bundle():
+    return joblib.load('ml/model.pkl')
+
+def predict_potential(features: dict):
+    b = _bundle()
+    X = pd.DataFrame([features]).reindex(columns=b['columns'], fill_value=0)
+    proba = b['model'].predict_proba(X)[0]
+    classes = b['model'].classes_
+    idx = proba.argmax()
+    return classes[idx], float(proba[idx])
+\end{lstlisting}
+
+\subsection{Pipeline Kanban --- HTMX et glisser-déposer}
+
+Le drag-and-drop ne nécessite ni librairie tierce ni framework JS~: la
+balise HTMX \texttt{hx-post} renvoie le nouveau statut au backend, qui
+répond avec le fragment HTML mis à jour.
+
+\begin{lstlisting}[language=HTML,caption={templates/pipeline/kanban.html (extrait)}]
+<div class="kanban-col" data-status="active"
+     hx-post="{% url 'pipeline:move' %}"
+     hx-trigger="drop"
+     hx-vals='{"status": "active"}'
+     hx-swap="outerHTML">
+  {% for product in active_products %}
+    <article draggable="true" data-id="{{ product.id }}">
+      {{ product.name }}
+    </article>
+  {% endfor %}
+</div>
+\end{lstlisting}

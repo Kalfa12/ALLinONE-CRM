@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Pipeline" %} — {% trans "Marketing CRM" %}{% endblock %}
+{% block content %}
+<div class="flex items-center justify-between mb-4">
+  <h1 class="text-2xl font-bold">{% trans "Product Pipeline" %}</h1>
+  <a href="{% url 'pipeline:product_create' %}"
+     class="px-3 py-1.5 bg-indigo-600 text-white text-sm rounded hover:bg-indigo-700">
+    + {% trans "New product" %}
+  </a>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+  {% for status, products in columns %}
+    <section class="bg-white rounded-lg border border-slate-200 p-3 min-h-[300px]"
+             data-status="{{ status }}"
+             ondragover="event.preventDefault()"
+             ondrop="onDrop(event, '{{ status }}')">
+      <h2 class="text-sm font-semibold uppercase tracking-wide text-slate-500 mb-2">
+        {% if status == 'planning' %}{% trans "Planning" %}
+        {% elif status == 'active' %}{% trans "Active" %}
+        {% else %}{% trans "Evaluated" %}{% endif %}
+        <span class="ml-1 text-xs text-slate-400">({{ products|length }})</span>
+      </h2>
+      <div class="space-y-2">
+        {% for p in products %}
+          <article draggable="true"
+                   ondragstart="event.dataTransfer.setData('text/plain', '{{ p.id }}')"
+                   class="bg-slate-50 hover:bg-slate-100 p-3 rounded border border-slate-200 cursor-move">
+            <a href="{% url 'pipeline:product_detail' p.pk %}" class="font-medium text-indigo-700">
+              {{ p.name }}
+            </a>
+            <p class="text-xs text-slate-500 mt-1">{{ p.description|truncatechars:80 }}</p>
+            <div class="text-xs text-slate-400 mt-2">{% trans "Score" %}: {{ p.score }}</div>
+          </article>
+        {% empty %}
+          <p class="text-xs text-slate-400 italic">{% trans "No products." %}</p>
+        {% endfor %}
+      </div>
+    </section>
+  {% endfor %}
+</div>
+
+<script>
+function onDrop(ev, status) {
+  ev.preventDefault();
+  const id = ev.dataTransfer.getData('text/plain');
+  if (!id) return;
+  const fd = new FormData();
+  fd.append('status', status);
+  fd.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+  fetch(`/product/${id}/move/`, {method: 'POST', body: fd, credentials: 'same-origin'})
+    .then(r => { if (r.ok) location.reload(); });
+}
+</script>
+{% endblock %}

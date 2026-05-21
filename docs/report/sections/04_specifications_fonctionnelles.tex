@@ -1,0 +1,84 @@
+\section{Spécifications fonctionnelles}
+\label{sec:specs-fonc}
+
+Cette section détaille les exigences fonctionnelles de la plateforme,
+classées par module métier puis traduites en \emph{user stories}.
+
+\subsection{Module \emph{Pipeline produit}}
+
+\begin{itemize}
+    \item Visualisation Kanban à trois colonnes~: \emph{Planning},
+    \emph{Active}, \emph{Évalué}.
+    \item Création, édition, suppression d'un produit (CRUD complet).
+    \item Glisser-déposer (HTMX) pour faire évoluer un produit d'une
+    colonne à l'autre, avec persistance immédiate en base.
+    \item Score qualitatif (0--10), notes libres, pièces jointes.
+\end{itemize}
+
+\textbf{User story~:} \emph{«~En tant que marketing manager, je veux
+déplacer un produit de \emph{Planning} vers \emph{Active} en un seul geste
+afin que toute l'équipe voie immédiatement qu'il entre en phase de test.~»}
+
+\subsection{Module \emph{Bibliothèque d'assets}}
+
+Trois sous-entités liées entre elles~:
+
+\begin{description}
+    \item[Angles] approche psychologique de la campagne (Problème/Solution,
+    Bénéfice, Offre Irrésistible). Le système calcule automatiquement un
+    \emph{taux de succès} basé sur les performances historiques des
+    créatifs qui s'y rattachent.
+    \item[Créatifs] fichiers image ou vidéo associés à une campagne et un
+    angle, marqués \emph{winner} si performance supérieure au seuil.
+    \item[Hooks] phrases d'accroche réutilisables, indexées par plateforme
+    (Social, Search, Display) et par déclencheur psychologique (Curiosité,
+    Douleur, Démonstration).
+\end{description}
+
+\subsection{Module \emph{Finance \& ROI}}
+
+\begin{itemize}
+    \item Saisie d'une dépense (montant, catégorie, date, campagne
+    rattachée).
+    \item Saisie d'un revenu (montant, source, date, campagne rattachée).
+    \item Tableau de bord par campagne~: budget alloué, dépensé, revenu
+    généré, ROI = $(R - D)/D \times 100$.
+    \item Alertes visuelles (rouge/vert) en fonction du seuil de
+    rentabilité.
+\end{itemize}
+
+\subsection{Module \emph{Assistant IA (chatbot DeepSeek)}}
+
+\begin{itemize}
+    \item Widget flottant disponible sur toutes les pages.
+    \item Historique des conversations persistant par utilisateur.
+    \item Le prompt système est généré dynamiquement à partir des données
+    courantes du CRM (top campagnes, ROI, meilleur angle).
+    \item Réponses en streaming (Server-Sent Events) pour une UX fluide.
+    \item Le chatbot répond dans la langue de l'interface active.
+\end{itemize}
+
+\subsection{Module \emph{Prédiction ML}}
+
+\begin{itemize}
+    \item Formulaire de soumission d'un nouveau produit (catégorie, prix,
+    niveau de concurrence, type d'angle envisagé, CTR initial estimé).
+    \item Retour~: classe prédite (\emph{Low}, \emph{Medium}, \emph{High})
+    et indice de confiance.
+    \item Journalisation de chaque prédiction (table \texttt{PredictionLog})
+    pour ré-entraîner le modèle ultérieurement.
+\end{itemize}
+
+\subsection{Exigences transverses}
+
+\begin{description}
+    \item[Internationalisation] Trois langues supportées
+    nativement~: anglais, français, arabe. La direction d'écriture bascule
+    automatiquement en \emph{RTL} pour la version arabe.
+    \item[Authentification] Mécanisme natif Django (login, logout, reset
+    password). Permissions gérées via les groupes Django.
+    \item[Accessibilité] Contraste AA, navigation clavier, libellés
+    \texttt{aria-label} sur les composants interactifs.
+    \item[Responsive] Mise en page fluide grâce à Tailwind CSS, testée du
+    mobile (375~px) au desktop (1440~px).
+\end{description}

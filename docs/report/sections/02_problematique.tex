@@ -1,0 +1,78 @@
+\section{Problématique}
+\label{sec:problematique}
+
+\subsection{Énoncé du problème}
+
+Les équipes de marketing de performance opèrent dans un environnement à
+\textbf{forte intensité décisionnelle}~: chaque jour, des dizaines de
+micro-décisions doivent être prises (quel angle tester, quel créatif mettre
+en pause, quel budget réallouer). Or, ces décisions sont aujourd'hui prises
+sur la base d'informations \emph{fragmentées}, \emph{retardées} et
+\emph{partiellement perdues}.
+
+Plus précisément, on identifie quatre douleurs récurrentes~:
+
+\begin{enumerate}
+    \item \textbf{Fragmentation des données.} Les informations relatives
+    à un même produit sont éparpillées dans 4 à 6 outils distincts. Un
+    marketeur passe en moyenne 30~\% de son temps à \emph{retrouver}
+    l'information avant de pouvoir l'\emph{exploiter}.
+
+    \item \textbf{Calcul manuel du ROI.} Le retour sur investissement est
+    calculé hebdomadairement dans des feuilles Excel, ce qui interdit toute
+    réaction rapide à une campagne déficitaire.
+
+    \item \textbf{Perte de la connaissance créative.} Les angles
+    psychologiques (Problème/Solution, Bénéfice, Offre Irrésistible) et les
+    \emph{hooks} qui ont historiquement bien performé ne sont pas
+    capitalisés~: chaque nouveau produit repart d'une page blanche.
+
+    \item \textbf{Absence d'aide à la décision en temps réel.} Aucun outil
+    grand public ne propose à la fois une vue consolidée des données
+    marketing \emph{et} un assistant conversationnel capable de répondre à
+    des questions naturelles sur ces données.
+\end{enumerate}
+
+\subsection{En quoi le plugin DeepSeek résout-il ce problème~?}
+
+Le chatbot intégré n'est pas un simple gadget conversationnel. Avant
+d'envoyer la question de l'utilisateur à l'API DeepSeek, le backend Django
+\textbf{enrichit le prompt système} avec un instantané des données les plus
+pertinentes du CRM~: top campagnes des 30~derniers jours, ROI courant,
+angle le plus performant, alertes budgétaires. L'assistant répond donc avec
+des \emph{faits}, pas avec des généralités.
+
+Concrètement, là où un marketeur devait auparavant ouvrir trois onglets et
+faire un calcul mental pour répondre à \emph{«~Quel angle dois-je
+prioriser cette semaine~?~»}, il obtient désormais une réponse argumentée en
+moins de cinq secondes, dans la langue de son choix (EN/FR/AR). C'est cette
+capacité à \textbf{transformer des données structurées en conseil
+actionnable} qui constitue la valeur ajoutée principale du chatbot.
+
+\subsection{Périmètre fonctionnel ciblé}
+
+Le tableau~\ref{tab:perimetre} synthétise les fonctionnalités
+\emph{incluses} et \emph{exclues} du périmètre du projet académique.
+
+\begin{table}[H]
+    \centering
+    \begin{tabularx}{\textwidth}{lXX}
+        \toprule
+        & \textbf{Inclus} & \textbf{Exclu (perspectives futures)}\\
+        \midrule
+        Pipeline & Kanban Planning / Active / Évalué & Synchronisation
+        Trello / Notion\\
+        Assets & Angles, Créatifs (upload), Hooks & Génération automatique
+        de visuels (Stable Diffusion)\\
+        Finance & Saisie manuelle dépenses / revenus, ROI & Connexion
+        directe Meta / Google Ads API\\
+        IA & Chatbot DeepSeek contextualisé & Agents autonomes,
+        function-calling avancé\\
+        ML & Catégorisation Faible/Moyen/Élevé & Prévision time-series du
+        budget\\
+        Auth & Auth Django par défaut & SSO Google / OAuth Meta\\
+        \bottomrule
+    \end{tabularx}
+    \caption{Périmètre fonctionnel du projet}
+    \label{tab:perimetre}
+\end{table}

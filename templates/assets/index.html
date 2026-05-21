@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<h1 class="text-2xl font-bold mb-4">{% trans "Marketing Asset Library" %}</h1>
+
+<div x-data="{tab: 'angles'}" class="space-y-4">
+  <div class="flex gap-2 border-b border-slate-200">
+    <button @click="tab='angles'" :class="tab==='angles' ? 'border-b-2 border-indigo-600 text-indigo-700' : 'text-slate-500'"
+            class="px-3 py-2 text-sm font-medium">{% trans "Angles" %}</button>
+    <button @click="tab='creatives'" :class="tab==='creatives' ? 'border-b-2 border-indigo-600 text-indigo-700' : 'text-slate-500'"
+            class="px-3 py-2 text-sm font-medium">{% trans "Creatives" %}</button>
+    <button @click="tab='hooks'" :class="tab==='hooks' ? 'border-b-2 border-indigo-600 text-indigo-700' : 'text-slate-500'"
+            class="px-3 py-2 text-sm font-medium">{% trans "Hooks" %}</button>
+  </div>
+
+  <div x-show="tab==='angles'" class="bg-white border border-slate-200 rounded p-3">
+    <table class="w-full text-sm">
+      <thead><tr class="text-left text-slate-500 border-b">
+        <th class="py-2">{% trans "Name" %}</th><th>{% trans "Category" %}</th><th>{% trans "Success rate (%)" %}</th>
+      </tr></thead>
+      <tbody>
+        {% for a in angles %}
+          <tr class="border-b border-slate-100"><td class="py-2">{{ a.name }}</td><td>{{ a.get_category_display }}</td><td>{{ a.success_rate }}</td></tr>
+        {% empty %}
+          <tr><td colspan="3" class="text-slate-400 italic py-2">{% trans "Add angles via the admin." %}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div x-show="tab==='creatives'" x-cloak class="bg-white border border-slate-200 rounded p-3">
+    <ul class="text-sm space-y-1">
+      {% for c in creatives %}
+        <li>🎨 <strong>{{ c.title }}</strong> — {{ c.get_media_type_display }}{% if c.is_winner %} <span class="text-emerald-600">★ {% trans "Winner" %}</span>{% endif %}</li>
+      {% empty %}
+        <li class="text-slate-400 italic">{% trans "No creatives yet." %}</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div x-show="tab==='hooks'" x-cloak class="bg-white border border-slate-200 rounded p-3">
+    <ul class="text-sm space-y-2">
+      {% for h in hooks %}
+        <li class="border-l-4 border-indigo-200 pl-2">
+          "{{ h.text }}"
+          <div class="text-xs text-slate-400">{{ h.get_platform_display }} · {{ h.get_trigger_type_display }} · score {{ h.performance_score }}</div>
+        </li>
+      {% empty %}
+        <li class="text-slate-400 italic">{% trans "No hooks yet." %}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock %}

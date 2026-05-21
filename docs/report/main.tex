@@ -1,0 +1,89 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- Encoding & Language ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+
+% --- Layout ---
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{parskip}
+
+% --- Graphics & Color ---
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{float}
+
+% --- Typography ---
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% --- Tables ---
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+
+% --- Code listings (use 'listings' for portability — no shell-escape needed) ---
+\usepackage{listings}
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue!70!black}\bfseries,
+    commentstyle=\color{green!50!black}\itshape,
+    stringstyle=\color{orange!80!black},
+    numberstyle=\tiny\color{gray},
+    numbers=left,
+    numbersep=8pt,
+    frame=single,
+    rulecolor=\color{gray!40},
+    breaklines=true,
+    showstringspaces=false,
+    tabsize=2,
+    captionpos=b
+}
+\lstdefinelanguage{Python}{
+    morekeywords={def,class,import,from,as,return,if,else,elif,for,while,try,except,with,lambda,True,False,None},
+    sensitive=true,
+    morecomment=[l]{\#},
+    morestring=[b]',
+    morestring=[b]"
+}
+
+% --- Hyperlinks (load last) ---
+\usepackage[hidelinks]{hyperref}
+\usepackage{cleveref}
+
+% --- Metadata ---
+\title{\textbf{Cahier des Charges}\\[0.3em]
+\large CRM de Gestion des Campagnes Marketing\\
+et de la Bibliothèque d'Assets Publicitaires\\[0.3em]
+\normalsize Plateforme web multilingue avec assistant IA (DeepSeek)\\
+et modèle prédictif (scikit-learn)}
+\author{Projet de fin de module --- Génie Logiciel \& Web}
+\date{Année universitaire 2025--2026}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+\newpage
+
+\tableofcontents
+\newpage
+
+\input{sections/01_introduction}
+\input{sections/02_problematique}
+\input{sections/03_existant}
+\input{sections/04_specifications_fonctionnelles}
+\input{sections/05_specifications_techniques}
+\input{sections/06_architecture_uml}
+\input{sections/07_implementation}
+\input{sections/08_tests_validation}
+\input{sections/09_conclusion}
+
+\newpage
+\bibliographystyle{plain}
+\nocite{*}
+\bibliography{references}
+
+\end{document}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load i18n humanize %}
+{% block content %}
+<div class="flex items-center justify-between mb-4">
+  <h1 class="text-2xl font-bold">{% trans "Finance & ROI Dashboard" %}</h1>
+  <div class="flex gap-2">
+    <a href="{% url 'finance:expense_create' %}" class="px-3 py-1.5 bg-rose-600 text-white text-sm rounded">+ {% trans "Expense" %}</a>
+    <a href="{% url 'finance:revenue_create' %}" class="px-3 py-1.5 bg-emerald-600 text-white text-sm rounded">+ {% trans "Revenue" %}</a>
+  </div>
+</div>
+
+<div class="grid grid-cols-2 gap-3 mb-5">
+  <div class="bg-white border border-slate-200 rounded p-3">
+    <div class="text-xs uppercase text-slate-500">{% trans "Total spent" %}</div>
+    <div class="text-2xl font-bold text-rose-600">{{ totals.spent }}</div>
+  </div>
+  <div class="bg-white border border-slate-200 rounded p-3">
+    <div class="text-xs uppercase text-slate-500">{% trans "Total revenue" %}</div>
+    <div class="text-2xl font-bold text-emerald-600">{{ totals.revenue }}</div>
+  </div>
+</div>
+
+<table class="w-full text-sm bg-white border border-slate-200 rounded">
+  <thead class="bg-slate-100 text-left">
+    <tr>
+      <th class="px-3 py-2">{% trans "Campaign" %}</th>
+      <th class="px-3 py-2">{% trans "Budget" %}</th>
+      <th class="px-3 py-2">{% trans "Spent" %}</th>
+      <th class="px-3 py-2">{% trans "Revenue" %}</th>
+      <th class="px-3 py-2">{% trans "ROI" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for r in rows %}
+      <tr class="border-t border-slate-100">
+        <td class="px-3 py-2">{{ r.campaign }}</td>
+        <td class="px-3 py-2">{{ r.budget }}</td>
+        <td class="px-3 py-2 text-rose-600">{{ r.spent }}</td>
+        <td class="px-3 py-2 text-emerald-600">{{ r.revenue }}</td>
+        <td class="px-3 py-2 font-semibold {% if r.roi and r.roi >= 0 %}text-emerald-700{% else %}text-rose-700{% endif %}">
+          {% if r.roi is not None %}{{ r.roi|floatformat:1 }}%{% else %}—{% endif %}
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="5" class="px-3 py-3 italic text-slate-400">{% trans "No campaigns yet." %}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

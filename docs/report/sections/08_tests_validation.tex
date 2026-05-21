@@ -1,0 +1,80 @@
+\section{Tests et validation}
+\label{sec:tests}
+
+\subsection{Stratégie de tests}
+
+La stratégie repose sur trois niveaux complémentaires~:
+
+\begin{description}
+    \item[Tests unitaires] couvrent les méthodes métier pures, en
+    particulier le calcul du ROI sur \texttt{Campaign}, le service
+    \texttt{predict\_potential()} et la construction du contexte CRM
+    (\texttt{build\_crm\_context}).
+    \item[Tests d'intégration] couvrent les vues HTTP avec le
+    \texttt{Client} de Django (création de produit, déplacement Kanban,
+    soumission du formulaire de prédiction). L'appel DeepSeek est
+    \emph{mocké} via \texttt{responses} pour rester déterministe.
+    \item[Tests manuels] focus sur l'i18n (chaque page chargée en EN,
+    FR, AR avec vérification visuelle du RTL) et sur la fluidité du
+    chatbot en streaming.
+\end{description}
+
+\subsection{Exemple de test unitaire ROI}
+
+\begin{lstlisting}[language=Python,caption={tests/test\_roi.py}]
+import pytest
+from decimal import Decimal
+from apps.pipeline.models import Product, Campaign
+from apps.finance.models import Expense, Revenue
+
+@pytest.mark.django_db
+def test_roi_basic():
+    p = Product.objects.create(name='Test')
+    c = Campaign.objects.create(product=p, name='C1',
+        start_date='2026-01-01', budget=1000)
+    Expense.objects.create(campaign=c, amount=Decimal('500'),
+        category='ads', date='2026-01-02')
+    Revenue.objects.create(campaign=c, amount=Decimal('800'),
+        date='2026-01-10')
+    assert c.roi() == 60  # (800-500)/500 * 100
+\end{lstlisting}
+
+\subsection{Validation du modèle ML}
+
+Le script \texttt{ml/train.py} affiche un \texttt{classification\_report}
+de scikit-learn sur le jeu de test (20~\% du dataset synthétique). Les
+métriques cibles sont~:
+
+\begin{itemize}
+    \item Accuracy globale~$\geq 0{,}80$.
+    \item F1-score par classe (\emph{Low} / \emph{Medium} / \emph{High})~%
+    $\geq 0{,}75$.
+    \item Matrice de confusion exportée en PNG dans
+    \texttt{docs/report/figures/confusion\_matrix.png}.
+\end{itemize}
+
+\subsection{Validation de l'i18n}
+
+Pour chaque langue, on vérifie qu'il n'existe \emph{aucune} entrée fuzzy
+ni vide dans les fichiers \texttt{.po}~:
+
+\begin{lstlisting}[language=bash]
+django-admin makemessages -a
+msgattrib --untranslated locale/fr/LC_MESSAGES/django.po
+msgattrib --untranslated locale/ar/LC_MESSAGES/django.po
+\end{lstlisting}
+
+Aucune sortie attendue.
+
+\subsection{Validation du chatbot}
+
+\begin{enumerate}
+    \item Test de connectivité~: appel direct à \texttt{ask\_deepseek()}
+    avec un message connu, vérification du code HTTP 200 et de la présence
+    d'un champ \texttt{content} non vide.
+    \item Test de contextualisation~: création de campagnes fictives,
+    appel du builder, vérification que les noms apparaissent bien dans le
+    \texttt{system\_prompt}.
+    \item Test multilingue~: même question posée en EN, FR, AR~; on vérifie
+    que la réponse est dans la langue demandée.
+\end{enumerate}

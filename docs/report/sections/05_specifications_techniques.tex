@@ -1,0 +1,72 @@
+\section{Spécifications techniques}
+\label{sec:specs-tech}
+
+\subsection{Choix technologiques}
+
+\begin{table}[H]
+    \centering
+    \begin{tabularx}{\textwidth}{lX}
+        \toprule
+        \textbf{Couche} & \textbf{Choix retenu et justification}\\
+        \midrule
+        Langage backend & \textbf{Python~3.11+} --- écosystème data/ML
+        mature, lisibilité, alignement avec les compétences enseignées.\\
+        Framework web & \textbf{Django~5.x} --- ORM puissant, admin
+        gratuit, support i18n natif via \texttt{gettext}, mature.\\
+        Base de données & \textbf{SQLite} en développement,
+        \textbf{PostgreSQL} en production --- migration transparente via
+        l'ORM Django.\\
+        Frontend & \textbf{Templates Django + Tailwind CSS~3} --- rendu
+        serveur compatible \texttt{\{\% trans \%\}}, design moderne sans
+        framework JS lourd.\\
+        Interactivité & \textbf{HTMX + Alpine.js} --- drag-and-drop Kanban,
+        widget chatbot, sans bundler ni étape de build JS.\\
+        IA conversationnelle & \textbf{API DeepSeek}
+        (\texttt{deepseek-chat}) --- API compatible OpenAI, faible coût,
+        bonne qualité multilingue.\\
+        Apprentissage automatique & \textbf{scikit-learn}
+        (\texttt{RandomForestClassifier}) --- robuste, interprétable,
+        adapté à un petit jeu de données synthétique.\\
+        Sérialisation modèle & \textbf{joblib} --- standard de fait pour
+        sklearn.\\
+        Configuration & \textbf{python-decouple} + fichier \texttt{.env}
+        --- séparation code/secrets.\\
+        Tests & \textbf{pytest-django} + \texttt{coverage.py}.\\
+        \bottomrule
+    \end{tabularx}
+    \caption{Stack technique retenue}
+    \label{tab:stack}
+\end{table}
+
+\subsection{Exigences non fonctionnelles}
+
+\begin{description}
+    \item[Performance] Toutes les pages doivent répondre en moins de
+    300~ms sur un dataset de démonstration. Les requêtes du tableau de
+    bord ROI utilisent \texttt{annotate()} et \texttt{aggregate()} pour
+    rester en une seule requête SQL.
+    \item[Sécurité] Protection CSRF native Django, requêtes sortantes
+    DeepSeek effectuées exclusivement côté serveur (la clé API n'est
+    jamais exposée au navigateur), validation des uploads de créatifs
+    (taille max, MIME type whitelist).
+    \item[Maintenabilité] Découpage en applications Django distinctes
+    (\texttt{pipeline}, \texttt{assets}, \texttt{finance}, \texttt{chatbot},
+    \texttt{prediction}, \texttt{core}), couverture de tests $\geq 60~\%$
+    sur la logique métier.
+    \item[Portabilité] Aucune dépendance native non-pip~; le projet doit
+    démarrer sous macOS, Linux et Windows en moins de 5~minutes.
+    \item[Internationalisation] Toutes les chaînes user-facing passent par
+    \texttt{gettext\_lazy} ou \texttt{\{\% trans \%\}}. Les fichiers
+    \texttt{.po} sont versionnés~; la compilation \texttt{.mo} est
+    documentée dans le \texttt{README}.
+\end{description}
+
+\subsection{Variables d'environnement}
+
+\begin{lstlisting}[language=bash,caption={Fichier .env.example},label=lst:env]
+DJANGO_SECRET_KEY=change-me-in-prod
+DJANGO_DEBUG=True
+DEEPSEEK_API_KEY=sk-...
+DEEPSEEK_BASE_URL=https://api.deepseek.com/v1
+DEEPSEEK_MODEL=deepseek-chat
+\end{lstlisting}

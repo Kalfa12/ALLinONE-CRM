@@ -1,0 +1,211 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: marketing-crm 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+# --- Languages ---
+msgid "English"
+msgstr "Anglais"
+
+msgid "French"
+msgstr "Français"
+
+msgid "Arabic"
+msgstr "Arabe"
+
+# --- Branding / nav ---
+msgid "Marketing CRM"
+msgstr "CRM Marketing"
+
+msgid "Marketing Campaign & Asset Management CRM"
+msgstr "CRM de Gestion des Campagnes et des Assets Marketing"
+
+msgid "Pipeline"
+msgstr "Pipeline"
+
+msgid "Assets"
+msgstr "Assets"
+
+msgid "Finance"
+msgstr "Finance"
+
+msgid "Predict"
+msgstr "Prédire"
+
+msgid "Login"
+msgstr "Connexion"
+
+msgid "Logout"
+msgstr "Déconnexion"
+
+msgid "Sign in"
+msgstr "Se connecter"
+
+# --- Pipeline ---
+msgid "Product Pipeline"
+msgstr "Pipeline Produits"
+
+msgid "New product"
+msgstr "Nouveau produit"
+
+msgid "Planning"
+msgstr "Planifié"
+
+msgid "Active"
+msgstr "Actif"
+
+msgid "Evaluated"
+msgstr "Évalué"
+
+msgid "Score"
+msgstr "Score"
+
+msgid "Status"
+msgstr "Statut"
+
+msgid "Name"
+msgstr "Nom"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Notes"
+msgstr "Notes"
+
+msgid "Create"
+msgstr "Créer"
+
+msgid "Save"
+msgstr "Enregistrer"
+
+msgid "Back to pipeline"
+msgstr "Retour au pipeline"
+
+msgid "Campaigns"
+msgstr "Campagnes"
+
+msgid "No campaigns yet."
+msgstr "Aucune campagne pour le moment."
+
+msgid "No products."
+msgstr "Aucun produit."
+
+# --- Assets ---
+msgid "Marketing Asset Library"
+msgstr "Bibliothèque d'Assets Marketing"
+
+msgid "Angles"
+msgstr "Angles"
+
+msgid "Creatives"
+msgstr "Créatifs"
+
+msgid "Hooks"
+msgstr "Accroches"
+
+msgid "Category"
+msgstr "Catégorie"
+
+msgid "Success rate (%)"
+msgstr "Taux de succès (%)"
+
+msgid "Add angles via the admin."
+msgstr "Ajoutez des angles via l'administration."
+
+msgid "Winner"
+msgstr "Gagnant"
+
+msgid "No creatives yet."
+msgstr "Aucun créatif pour le moment."
+
+msgid "No hooks yet."
+msgstr "Aucune accroche pour le moment."
+
+# --- Finance ---
+msgid "Finance & ROI Dashboard"
+msgstr "Tableau de bord Finance & ROI"
+
+msgid "Total spent"
+msgstr "Total dépensé"
+
+msgid "Total revenue"
+msgstr "Total des revenus"
+
+msgid "Campaign"
+msgstr "Campagne"
+
+msgid "Budget"
+msgstr "Budget"
+
+msgid "Spent"
+msgstr "Dépensé"
+
+msgid "Revenue"
+msgstr "Revenu"
+
+msgid "ROI"
+msgstr "ROI"
+
+msgid "Expense"
+msgstr "Dépense"
+
+msgid "Log expense"
+msgstr "Saisir une dépense"
+
+msgid "Log revenue"
+msgstr "Saisir un revenu"
+
+msgid "Amount"
+msgstr "Montant"
+
+msgid "Date"
+msgstr "Date"
+
+msgid "Source"
+msgstr "Source"
+
+# --- Prediction ---
+msgid "Product Potential Predictor"
+msgstr "Prédicteur de Potentiel Produit"
+
+msgid "Estimate the potential of a new product (Low / Medium / High) using a Random Forest model trained on historical campaign data."
+msgstr "Estime le potentiel d'un nouveau produit (Faible / Moyen / Élevé) à l'aide d'un modèle Random Forest entraîné sur l'historique des campagnes."
+
+msgid "Price ($)"
+msgstr "Prix ($)"
+
+msgid "Competition level"
+msgstr "Niveau de concurrence"
+
+msgid "Angle type"
+msgstr "Type d'angle"
+
+msgid "Initial CTR (0-1)"
+msgstr "CTR initial (0-1)"
+
+msgid "Predict"
+msgstr "Prédire"
+
+msgid "Result"
+msgstr "Résultat"
+
+msgid "Confidence"
+msgstr "Confiance"
+
+msgid "Submit the form to see a prediction."
+msgstr "Soumettez le formulaire pour obtenir une prédiction."
+
+msgid "Recent predictions"
+msgstr "Prédictions récentes"
+
+# --- Chatbot ---
+msgid "Marketing Assistant"
+msgstr "Assistant Marketing"
+
+msgid "Ask about campaigns, ROI, angles…"
+msgstr "Posez une question sur les campagnes, le ROI, les angles…"

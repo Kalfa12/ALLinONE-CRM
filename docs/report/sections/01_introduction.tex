@@ -1,0 +1,58 @@
+\section{Introduction et contexte}
+\label{sec:intro}
+
+Le marketing digital occupe aujourd'hui une place centrale dans la stratégie
+commerciale des entreprises, qu'il s'agisse de pure-players e-commerce, de
+marques traditionnelles en transition numérique ou d'agences spécialisées. La
+multiplication des canaux d'acquisition (Meta, TikTok, Google Ads, e-mail,
+SEO\ldots), des formats publicitaires (vidéo, image, carrousel, UGC) et des
+indicateurs de performance (CPM, CPA, ROAS, LTV) a transformé le métier de
+\emph{marketeur} en celui d'un véritable \emph{ingénieur de données}.
+
+Pourtant, la grande majorité des équipes marketing continue d'opérer à l'aide
+d'un patchwork d'outils mal intégrés~: Trello pour les idées de produits,
+Google Sheets pour le suivi budgétaire, Notion pour les briefs créatifs,
+Google Drive pour les assets vidéo, et enfin les interfaces natives des régies
+publicitaires pour le pilotage des campagnes. Cette fragmentation engendre
+trois problèmes structurels~: \textbf{la perte de connaissance}
+(les angles psychologiques qui ont fonctionné disparaissent dans les fils Slack),
+\textbf{l'inefficacité opérationnelle} (le calcul manuel du ROI consomme un
+temps précieux), et \textbf{l'absence d'aide à la décision en temps réel}
+(les équipes lancent de nouveaux produits sans appui analytique).
+
+Le présent projet répond à cette problématique en proposant un \textbf{CRM
+spécialisé pour le marketing de performance}~: une plateforme web unifiée qui
+centralise le pipeline produit, la bibliothèque d'assets (angles, créatifs,
+hooks), le suivi budgétaire et l'analyse du ROI, le tout enrichi par un
+assistant conversationnel propulsé par l'API DeepSeek et par un modèle
+prédictif d'évaluation du potentiel d'un nouveau produit.
+
+\subsection{Objectifs du projet}
+
+\begin{itemize}
+    \item Concevoir et développer une application web Django couvrant
+    l'intégralité du cycle de vie d'une campagne marketing.
+    \item Garantir une expérience utilisateur multilingue native en
+    \textbf{anglais, français et arabe} (avec gestion correcte du sens
+    d'écriture droite-à-gauche).
+    \item Intégrer un \textbf{plugin chatbot} basé sur l'API DeepSeek qui
+    apporte une valeur métier concrète~: répondre aux questions du marketeur
+    en s'appuyant sur les données réelles du CRM.
+    \item Ajouter une fonctionnalité bonus de \textbf{prédiction par
+    apprentissage automatique} permettant de catégoriser le potentiel
+    (Faible / Moyen / Élevé) d'un nouveau produit.
+    \item Produire l'ensemble des livrables académiques requis~: cahier des
+    charges, diagrammes UML, présentation de soutenance.
+\end{itemize}
+
+\subsection{Public cible}
+
+Trois profils d'utilisateurs ont été identifiés~:
+\begin{description}
+    \item[Le marketing manager] qui pilote les campagnes au quotidien et
+    consulte le pipeline pour décider des prochains lancements.
+    \item[L'analyste data] qui consulte les tableaux de bord ROI et utilise
+    le chatbot pour interroger les données sans écrire de SQL.
+    \item[L'administrateur] qui gère les utilisateurs, les permissions et
+    les paramètres globaux.
+\end{description}

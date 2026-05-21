@@ -1,0 +1,77 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{% trans "Marketing CRM" %}{% endblock %}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/htmx.org@1.9.12" defer></script>
+  <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <style>
+    [x-cloak] { display: none !important; }
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    [dir="rtl"] body { font-family: "Segoe UI", Tahoma, sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+<header class="bg-white border-b border-slate-200">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+    <a href="{% url 'pipeline:kanban' %}" class="text-lg font-bold text-indigo-600">
+      📈 {% trans "Marketing CRM" %}
+    </a>
+    {% if user.is_authenticated %}
+    <nav class="flex items-center gap-4 text-sm">
+      {% for item in nav_items %}
+        <a href="{% url item.url_name %}" class="hover:text-indigo-600">{{ item.label }}</a>
+      {% endfor %}
+    </nav>
+    {% endif %}
+    <div class="flex items-center gap-3">
+      {# Language switcher #}
+      <form action="{% url 'set_language' %}" method="post" class="flex items-center gap-1">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.path }}">
+        <select name="language" onchange="this.form.submit()" class="text-xs border rounded px-1 py-0.5 bg-white">
+          {% get_current_language as LANGUAGE_CODE %}
+          {% get_available_languages as LANGUAGES %}
+          {% for lang_code, lang_name in LANGUAGES %}
+            <option value="{{ lang_code }}" {% if lang_code == LANGUAGE_CODE %}selected{% endif %}>
+              {{ lang_code|upper }}
+            </option>
+          {% endfor %}
+        </select>
+      </form>
+      {% if user.is_authenticated %}
+        <span class="text-xs text-slate-500">{{ user.username }}</span>
+        <form method="post" action="{% url 'logout' %}" class="inline">
+          {% csrf_token %}
+          <button class="text-xs text-slate-500 hover:text-red-600">{% trans "Logout" %}</button>
+        </form>
+      {% else %}
+        <a href="{% url 'login' %}" class="text-xs text-indigo-600">{% trans "Login" %}</a>
+      {% endif %}
+    </div>
+  </div>
+</header>
+
+<main class="flex-1 max-w-7xl mx-auto w-full px-4 py-6">
+  {% if messages %}
+    {% for m in messages %}
+      <div class="mb-3 px-3 py-2 rounded bg-amber-100 text-amber-900 text-sm">{{ m }}</div>
+    {% endfor %}
+  {% endif %}
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="border-t border-slate-200 bg-white py-3 text-center text-xs text-slate-400">
+  © 2026 — {% trans "Marketing Campaign & Asset Management CRM" %}
+</footer>
+
+{% if user.is_authenticated %}
+{% include 'chatbot/widget.html' %}
+{% endif %}
+
+</body>
+</html>

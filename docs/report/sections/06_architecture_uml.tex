@@ -1,0 +1,93 @@
+\section{Architecture et diagrammes UML}
+\label{sec:archi}
+
+L'ensemble des diagrammes UML est rédigé en syntaxe \textbf{Mermaid} dans
+le fichier \texttt{docs/diagrams.md} et exporté en PNG via la CLI
+\texttt{mmdc} pour intégration dans le présent rapport. Cette section
+résume les diagrammes les plus importants~; les versions complètes (et
+zoomables) sont disponibles dans le dépôt.
+
+\subsection{Vue d'ensemble (diagramme de composants)}
+
+L'application suit une architecture web classique en 3-tiers. Le navigateur
+échange exclusivement avec le serveur Django, qui orchestre les accès à la
+base PostgreSQL, au système de fichiers (créatifs) et à l'API externe
+DeepSeek.
+
+\begin{itemize}
+    \item \textbf{Couche présentation~:} templates Django + Tailwind +
+    HTMX/Alpine. Pas de SPA, pas de bundler JS.
+    \item \textbf{Couche métier~:} vues Django, services
+    (\texttt{apps/chatbot/services.py}, \texttt{apps/prediction/services.py}),
+    modèles ORM.
+    \item \textbf{Couche données~:} PostgreSQL pour les entités relationnelles,
+    système de fichiers pour les créatifs, fichier \texttt{model.pkl} pour
+    le modèle ML pré-entraîné.
+\end{itemize}
+
+\subsection{Diagramme de cas d'utilisation}
+
+Trois acteurs (Marketing Manager, Analyste, Administrateur) interagissent
+avec dix cas d'utilisation principaux. Le cas \emph{«~Chat with Marketing
+Assistant~»} est le différenciateur central du projet. Voir
+\texttt{docs/diagrams.md} \S1.
+
+\subsection{Diagramme de classes}
+
+Le modèle de données comporte 11 entités principales~: \texttt{User},
+\texttt{Product}, \texttt{Campaign}, \texttt{Angle}, \texttt{Creative},
+\texttt{Hook}, \texttt{Expense}, \texttt{Revenue}, \texttt{ChatSession},
+\texttt{ChatMessage}, \texttt{PredictionLog}.
+
+Les relations clés sont~:
+\begin{itemize}
+    \item \texttt{Product 1---* Campaign} --- un produit peut faire l'objet
+    de plusieurs campagnes successives.
+    \item \texttt{Campaign 1---* Creative / Expense / Revenue}
+    --- agrégations financières et créatives à la maille campagne.
+    \item \texttt{Angle *---* Creative} et \texttt{Angle *---* Hook} ---
+    réutilisation transversale des angles psychologiques.
+    \item \texttt{ChatSession 1---* ChatMessage} --- historique
+    conversationnel.
+\end{itemize}
+
+\subsection{Diagramme de séquence --- chatbot DeepSeek}
+
+C'est le diagramme le plus important du projet car il illustre le mécanisme
+de \emph{contextualisation} qui distingue notre chatbot d'un simple
+\texttt{ChatGPT} générique.
+
+\begin{enumerate}
+    \item L'utilisateur saisit sa question dans le widget Alpine.js.
+    \item Le navigateur envoie une requête \texttt{POST /chat/} au backend.
+    \item La vue Django persiste le message utilisateur, puis appelle
+    \texttt{build\_context(user)}.
+    \item Le \emph{Context Builder} interroge la base pour extraire les
+    statistiques pertinentes (top 5~campagnes, ROI moyen, meilleur angle
+    du mois).
+    \item Ces faits sont injectés dans le \texttt{system\_prompt} envoyé
+    à l'API DeepSeek.
+    \item DeepSeek retourne une complétion en streaming.
+    \item Le backend persiste la réponse et la transmet au navigateur via
+    \texttt{StreamingHttpResponse} (Server-Sent Events).
+\end{enumerate}
+
+Voir \texttt{docs/diagrams.md} \S3 pour le diagramme complet.
+
+\subsection{Diagramme de séquence --- prédiction ML}
+
+Le flux de prédiction est volontairement simple~: la vue
+\texttt{/predict/} reçoit le formulaire, délègue à
+\texttt{prediction.services.predict\_potential()}, qui charge \emph{une
+seule fois} le modèle (mise en cache au démarrage de l'app) et retourne la
+classe et la confiance. Une trace est écrite en base
+(\texttt{PredictionLog}) pour permettre un ré-entraînement futur.
+
+Voir \texttt{docs/diagrams.md} \S4.
+
+\subsection{Diagramme d'états --- cycle de vie d'un produit}
+
+Le produit transite par trois états~: \emph{Planning}~$\rightarrow$~%
+\emph{Active}~$\rightarrow$~\emph{Évalué}, avec des transitions de retour
+possibles (re-test avec un nouvel angle). Voir \texttt{docs/diagrams.md}
+\S6.

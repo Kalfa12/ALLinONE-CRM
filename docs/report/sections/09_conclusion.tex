@@ -1,0 +1,66 @@
+\section{Conclusion et perspectives}
+\label{sec:conclusion}
+
+\subsection{Bilan}
+
+Le projet livre une plateforme web fonctionnelle qui couvre l'intégralité
+du périmètre défini dans la section~\ref{sec:specs-fonc}~: pipeline produit
+Kanban, bibliothèque d'angles/créatifs/hooks, suivi budgétaire avec calcul
+automatique de ROI, assistant IA multilingue propulsé par DeepSeek, et
+modèle prédictif de catégorisation du potentiel d'un nouveau produit. Les
+trois langues exigées (anglais, français, arabe) sont supportées
+nativement, avec gestion correcte de l'écriture droite-à-gauche pour
+l'arabe.
+
+D'un point de vue pédagogique, le projet illustre concrètement~:
+\begin{itemize}
+    \item La maîtrise du framework Django dans sa configuration moderne
+    (templates + HTMX + Tailwind, sans SPA).
+    \item L'intégration d'une API LLM tierce dans une application métier,
+    avec injection de contexte structuré pour produire des réponses
+    \emph{ancrées} dans les données.
+    \item La mise en œuvre d'un pipeline ML simple mais complet
+    (entraînement, sérialisation, inférence en production).
+    \item Le respect des bonnes pratiques d'i18n côté serveur.
+\end{itemize}
+
+\subsection{Limites identifiées}
+
+\begin{itemize}
+    \item Le jeu de données utilisé pour entraîner le catégoriseur est
+    \emph{synthétique}~; les performances en conditions réelles devraient
+    être validées avec un historique de campagnes authentiques.
+    \item Le chatbot ne dispose pas (encore) de \emph{function-calling}~:
+    il peut citer les données du CRM mais ne peut pas, par exemple, créer
+    une campagne ou modifier un budget par lui-même.
+    \item L'authentification reste basique (Django auth + sessions) ;
+    aucune intégration SSO n'est prévue dans cette itération.
+\end{itemize}
+
+\subsection{Perspectives d'évolution}
+
+\begin{enumerate}
+    \item \textbf{Connecteurs régies publicitaires.} Brancher Meta Ads,
+    Google Ads et TikTok Ads via leurs APIs officielles pour automatiser
+    la saisie des dépenses et des performances.
+    \item \textbf{Génération de créatifs assistée.} Coupler le chatbot à
+    un modèle texte-vers-image (Stable Diffusion, FLUX) pour générer des
+    propositions de visuels publicitaires directement depuis le CRM.
+    \item \textbf{Function-calling DeepSeek.} Faire évoluer le chatbot en
+    agent capable d'exécuter des actions (créer une campagne, marquer un
+    créatif comme \emph{winner}\ldots) via l'API \emph{tools} de DeepSeek.
+    \item \textbf{Prévision time-series.} Ajouter un second modèle
+    (Prophet ou LightGBM) pour prévoir les dépenses publicitaires des 30
+    prochains jours.
+    \item \textbf{Déploiement} containerisé (Docker + docker-compose),
+    hébergement sur une PaaS (Fly.io, Railway) avec PostgreSQL managé.
+\end{enumerate}
+
+\subsection{Mot de la fin}
+
+Au-delà de la satisfaction des exigences académiques, ce projet a permis
+d'expérimenter une démarche de plus en plus répandue dans l'industrie~:
+construire des applications métier \textbf{augmentées par l'IA}, où le LLM
+n'est plus un simple chatbot décoratif mais un véritable collaborateur
+contextualisé. C'est cette intégration profonde, plus que l'usage isolé
+d'un modèle de langue, qui crée la valeur perçue par l'utilisateur final.

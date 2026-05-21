@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Login" %}{% endblock %}
+{% block content %}
+<div class="max-w-sm mx-auto bg-white p-6 rounded-lg shadow-sm border border-slate-200 mt-10">
+  <h1 class="text-xl font-bold mb-4">{% trans "Sign in" %}</h1>
+  <form method="post" class="space-y-3">
+    {% csrf_token %}
+    {% for field in form %}
+      <div>
+        <label class="block text-sm font-medium mb-1">{{ field.label }}</label>
+        {{ field }}
+        {% if field.errors %}<p class="text-xs text-red-600 mt-1">{{ field.errors|striptags }}</p>{% endif %}
+      </div>
+    {% endfor %}
+    {% if form.non_field_errors %}
+      <p class="text-sm text-red-600">{{ form.non_field_errors|striptags }}</p>
+    {% endif %}
+    <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700">
+      {% trans "Login" %}
+    </button>
+  </form>
+</div>
+<style>
+  form input[type="text"], form input[type="password"] {
+    width: 100%; padding: .5rem .75rem; border: 1px solid #cbd5e1; border-radius: .375rem;
+  }
+</style>
+{% endblock %}

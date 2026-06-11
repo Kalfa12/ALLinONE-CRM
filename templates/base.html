@@ -6,34 +6,55 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}{% trans "Marketing CRM" %}{% endblock %}</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
   <script src="https://unpkg.com/htmx.org@1.9.12" defer></script>
   <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
   <style>
     [x-cloak] { display: none !important; }
     body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
     [dir="rtl"] body { font-family: "Segoe UI", Tahoma, sans-serif; }
+    .app-card { background: white; border: 1px solid rgb(226 232 240); border-radius: .5rem; box-shadow: 0 1px 2px rgb(15 23 42 / .04); }
+    .app-button { display: inline-flex; align-items: center; justify-content: center; gap: .45rem; border-radius: .5rem; padding: .55rem .8rem; font-size: .875rem; font-weight: 650; transition: color .15s ease, background-color .15s ease, border-color .15s ease, box-shadow .15s ease; }
+    .app-button-primary { background: rgb(79 70 229); color: white; box-shadow: 0 1px 2px rgb(79 70 229 / .24); }
+    .app-button-primary:hover { background: rgb(67 56 202); }
+    .app-button-soft { background: white; color: rgb(51 65 85); border: 1px solid rgb(203 213 225); }
+    .app-button-soft:hover { border-color: rgb(148 163 184); color: rgb(15 23 42); }
+    .app-input { width: 100%; border: 1px solid rgb(203 213 225); border-radius: .5rem; padding: .6rem .75rem; background: white; color: rgb(15 23 42); }
+    .app-input:focus { outline: 2px solid rgb(199 210 254); border-color: rgb(99 102 241); }
+    .metric-label { font-size: .72rem; line-height: 1rem; letter-spacing: .04em; text-transform: uppercase; font-weight: 700; color: rgb(100 116 139); }
+    .status-pill { display: inline-flex; align-items: center; gap: .35rem; border-radius: 999px; padding: .2rem .55rem; font-size: .72rem; font-weight: 700; }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col">
 
-<header class="bg-white border-b border-slate-200">
+<header class="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur">
   <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-    <a href="{% url 'pipeline:kanban' %}" class="text-lg font-bold text-indigo-600">
-      📈 {% trans "Marketing CRM" %}
+    <a href="{% url 'pipeline:kanban' %}" class="flex items-center gap-2 min-w-fit">
+      <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-indigo-600 text-white shadow-sm">
+        <i data-lucide="chart-no-axes-combined" class="h-5 w-5"></i>
+      </span>
+      <span>
+        <span class="block text-sm font-black text-slate-950 leading-4">{% trans "Marketing CRM" %}</span>
+        <span class="block text-[11px] font-medium text-slate-500 leading-4">{% trans "Campaign command center" %}</span>
+      </span>
     </a>
     {% if user.is_authenticated %}
-    <nav class="flex items-center gap-4 text-sm">
+    <nav class="hidden md:flex items-center gap-1 rounded-lg bg-slate-100 p-1 text-sm">
       {% for item in nav_items %}
-        <a href="{% url item.url_name %}" class="hover:text-indigo-600">{{ item.label }}</a>
+        <a href="{% url item.url_name %}"
+           class="inline-flex items-center gap-2 rounded-md px-3 py-2 font-semibold transition {% if active_namespace == item.namespace %}bg-white text-indigo-700 shadow-sm{% else %}text-slate-600 hover:text-slate-950{% endif %}">
+          <i data-lucide="{{ item.icon }}" class="h-4 w-4"></i>
+          {{ item.label }}
+        </a>
       {% endfor %}
     </nav>
     {% endif %}
-    <div class="flex items-center gap-3">
+    <div class="flex items-center gap-2">
       {# Language switcher #}
       <form action="{% url 'set_language' %}" method="post" class="flex items-center gap-1">
         {% csrf_token %}
         <input type="hidden" name="next" value="{{ request.path }}">
-        <select name="language" onchange="this.form.submit()" class="text-xs border rounded px-1 py-0.5 bg-white">
+        <select name="language" onchange="this.form.submit()" class="text-xs border border-slate-200 rounded-md px-2 py-1.5 bg-white font-semibold text-slate-600">
           {% get_current_language as LANGUAGE_CODE %}
           {% get_available_languages as LANGUAGES %}
           {% for lang_code, lang_name in LANGUAGES %}
@@ -44,28 +65,45 @@
         </select>
       </form>
       {% if user.is_authenticated %}
-        <span class="text-xs text-slate-500">{{ user.username }}</span>
+        <span class="hidden sm:inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-slate-600">
+          <i data-lucide="user-circle" class="h-4 w-4 text-slate-400"></i>
+          {{ user.username }}
+        </span>
         <form method="post" action="{% url 'logout' %}" class="inline">
           {% csrf_token %}
-          <button class="text-xs text-slate-500 hover:text-red-600">{% trans "Logout" %}</button>
+          <button class="app-button app-button-soft !px-2.5 !py-1.5" title="{% trans "Logout" %}">
+            <i data-lucide="log-out" class="h-4 w-4"></i>
+            <span class="hidden sm:inline">{% trans "Logout" %}</span>
+          </button>
         </form>
       {% else %}
-        <a href="{% url 'login' %}" class="text-xs text-indigo-600">{% trans "Login" %}</a>
+        <a href="{% url 'login' %}" class="app-button app-button-primary">{% trans "Login" %}</a>
       {% endif %}
     </div>
   </div>
+  {% if user.is_authenticated %}
+  <nav class="md:hidden max-w-7xl mx-auto px-4 pb-3 grid grid-cols-4 gap-1 text-xs">
+    {% for item in nav_items %}
+      <a href="{% url item.url_name %}"
+         class="flex flex-col items-center gap-1 rounded-lg px-2 py-2 font-semibold {% if active_namespace == item.namespace %}bg-indigo-50 text-indigo-700{% else %}text-slate-500{% endif %}">
+        <i data-lucide="{{ item.icon }}" class="h-4 w-4"></i>
+        {{ item.label }}
+      </a>
+    {% endfor %}
+  </nav>
+  {% endif %}
 </header>
 
-<main class="flex-1 max-w-7xl mx-auto w-full px-4 py-6">
+<main class="flex-1 max-w-7xl mx-auto w-full px-4 py-6 md:py-8">
   {% if messages %}
     {% for m in messages %}
-      <div class="mb-3 px-3 py-2 rounded bg-amber-100 text-amber-900 text-sm">{{ m }}</div>
+      <div class="mb-4 px-3 py-2 rounded-lg bg-amber-100 text-amber-900 text-sm border border-amber-200">{{ m }}</div>
     {% endfor %}
   {% endif %}
   {% block content %}{% endblock %}
 </main>
 
-<footer class="border-t border-slate-200 bg-white py-3 text-center text-xs text-slate-400">
+<footer class="border-t border-slate-200 bg-white py-4 text-center text-xs text-slate-400">
   © 2026 — {% trans "Marketing Campaign & Asset Management CRM" %}
 </footer>
 
@@ -73,5 +111,10 @@
 {% include 'chatbot/widget.html' %}
 {% endif %}
 
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.lucide) window.lucide.createIcons();
+  });
+</script>
 </body>
 </html>

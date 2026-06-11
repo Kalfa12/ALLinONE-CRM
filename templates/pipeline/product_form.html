@@ -1,33 +1,43 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
-<h1 class="text-2xl font-bold mb-4">{% trans "New product" %}</h1>
-<form method="post" class="bg-white p-5 rounded border border-slate-200 max-w-lg space-y-3">
-  {% csrf_token %}
-  <div>
-    <label class="block text-sm font-medium">{% trans "Name" %}</label>
-    <input name="name" required class="w-full border rounded px-2 py-1.5">
+<div class="mx-auto max-w-2xl">
+  <div class="mb-5">
+    <p class="metric-label">{% trans "Pipeline input" %}</p>
+    <h1 class="text-3xl font-black tracking-tight text-slate-950">{% trans "New product" %}</h1>
   </div>
-  <div>
-    <label class="block text-sm font-medium">{% trans "Description" %}</label>
-    <textarea name="description" rows="3" class="w-full border rounded px-2 py-1.5"></textarea>
-  </div>
-  <div>
-    <label class="block text-sm font-medium">{% trans "Status" %}</label>
-    <select name="status" class="w-full border rounded px-2 py-1.5">
-      {% for value, label in statuses.choices %}
-        <option value="{{ value }}">{{ label }}</option>
-      {% endfor %}
-    </select>
-  </div>
-  <div>
-    <label class="block text-sm font-medium">{% trans "Score" %}</label>
-    <input type="number" step="0.1" name="score" value="0" class="w-full border rounded px-2 py-1.5">
-  </div>
-  <div>
-    <label class="block text-sm font-medium">{% trans "Notes" %}</label>
-    <textarea name="notes" rows="2" class="w-full border rounded px-2 py-1.5"></textarea>
-  </div>
-  <button class="px-3 py-2 bg-indigo-600 text-white rounded">{% trans "Create" %}</button>
-</form>
+  <form method="post" class="app-card p-5 space-y-4">
+    {% csrf_token %}
+    <div>
+      <label class="mb-1 block text-sm font-bold text-slate-700">{% trans "Name" %}</label>
+      <input name="name" required class="app-input">
+    </div>
+    <div>
+      <label class="mb-1 block text-sm font-bold text-slate-700">{% trans "Description" %}</label>
+      <textarea name="description" rows="3" class="app-input"></textarea>
+    </div>
+    <div class="grid gap-4 sm:grid-cols-2">
+      <div>
+        <label class="mb-1 block text-sm font-bold text-slate-700">{% trans "Status" %}</label>
+        <select name="status" class="app-input">
+          {% for value, label in statuses.choices %}
+            <option value="{{ value }}">{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div>
+        <label class="mb-1 block text-sm font-bold text-slate-700">{% trans "Score" %}</label>
+        <input type="number" step="0.1" name="score" value="0" class="app-input">
+      </div>
+    </div>
+    <div>
+      <label class="mb-1 block text-sm font-bold text-slate-700">{% trans "Notes" %}</label>
+      <textarea name="notes" rows="3" class="app-input"></textarea>
+    </div>
+    <button class="app-button app-button-primary">
+      <i data-lucide="plus" class="h-4 w-4"></i>
+      {% trans "Create" %}
+    </button>
+  </form>
+</div>
 {% endblock %}

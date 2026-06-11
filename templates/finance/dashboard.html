@@ -1,49 +1,100 @@
 {% extends "base.html" %}
 {% load i18n humanize %}
 {% block content %}
-<div class="flex items-center justify-between mb-4">
-  <h1 class="text-2xl font-bold">{% trans "Finance & ROI Dashboard" %}</h1>
-  <div class="flex gap-2">
-    <a href="{% url 'finance:expense_create' %}" class="px-3 py-1.5 bg-rose-600 text-white text-sm rounded">+ {% trans "Expense" %}</a>
-    <a href="{% url 'finance:revenue_create' %}" class="px-3 py-1.5 bg-emerald-600 text-white text-sm rounded">+ {% trans "Revenue" %}</a>
+<div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between mb-5">
+  <div>
+    <p class="metric-label">{% trans "Performance control" %}</p>
+    <h1 class="text-3xl font-black tracking-tight text-slate-950">{% trans "Finance & ROI Dashboard" %}</h1>
+    <p class="mt-1 text-sm text-slate-500">{% trans "Compare spend, revenue, and campaign profitability in one view." %}</p>
+  </div>
+  <div class="flex flex-wrap gap-2">
+    <a href="{% url 'finance:expense_create' %}" class="app-button bg-rose-600 text-white hover:bg-rose-700">
+      <i data-lucide="minus" class="h-4 w-4"></i>
+      {% trans "Expense" %}
+    </a>
+    <a href="{% url 'finance:revenue_create' %}" class="app-button bg-emerald-600 text-white hover:bg-emerald-700">
+      <i data-lucide="plus" class="h-4 w-4"></i>
+      {% trans "Revenue" %}
+    </a>
   </div>
 </div>
 
-<div class="grid grid-cols-2 gap-3 mb-5">
-  <div class="bg-white border border-slate-200 rounded p-3">
-    <div class="text-xs uppercase text-slate-500">{% trans "Total spent" %}</div>
-    <div class="text-2xl font-bold text-rose-600">{{ totals.spent }}</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
+  <div class="app-card p-4">
+    <div class="flex items-center justify-between">
+      <span class="metric-label">{% trans "Total spent" %}</span>
+      <i data-lucide="credit-card" class="h-4 w-4 text-rose-500"></i>
+    </div>
+    <div class="mt-2 text-2xl font-black text-rose-600">{{ totals.spent|intcomma }}</div>
   </div>
-  <div class="bg-white border border-slate-200 rounded p-3">
-    <div class="text-xs uppercase text-slate-500">{% trans "Total revenue" %}</div>
-    <div class="text-2xl font-bold text-emerald-600">{{ totals.revenue }}</div>
+  <div class="app-card p-4">
+    <div class="flex items-center justify-between">
+      <span class="metric-label">{% trans "Total revenue" %}</span>
+      <i data-lucide="badge-dollar-sign" class="h-4 w-4 text-emerald-500"></i>
+    </div>
+    <div class="mt-2 text-2xl font-black text-emerald-600">{{ totals.revenue|intcomma }}</div>
+  </div>
+  <div class="app-card p-4">
+    <div class="flex items-center justify-between">
+      <span class="metric-label">{% trans "Net profit" %}</span>
+      <i data-lucide="trending-up" class="h-4 w-4 text-sky-500"></i>
+    </div>
+    <div class="mt-2 text-2xl font-black text-slate-950">{{ totals.profit|intcomma }}</div>
+  </div>
+  <div class="app-card p-4">
+    <div class="flex items-center justify-between">
+      <span class="metric-label">{% trans "Avg. ROI" %}</span>
+      <i data-lucide="percent" class="h-4 w-4 text-indigo-500"></i>
+    </div>
+    <div class="mt-2 text-2xl font-black text-indigo-700">
+      {% if totals.average_roi is not None %}{{ totals.average_roi|floatformat:1 }}%{% else %}—{% endif %}
+    </div>
   </div>
 </div>
 
-<table class="w-full text-sm bg-white border border-slate-200 rounded">
-  <thead class="bg-slate-100 text-left">
-    <tr>
-      <th class="px-3 py-2">{% trans "Campaign" %}</th>
-      <th class="px-3 py-2">{% trans "Budget" %}</th>
-      <th class="px-3 py-2">{% trans "Spent" %}</th>
-      <th class="px-3 py-2">{% trans "Revenue" %}</th>
-      <th class="px-3 py-2">{% trans "ROI" %}</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for r in rows %}
-      <tr class="border-t border-slate-100">
-        <td class="px-3 py-2">{{ r.campaign }}</td>
-        <td class="px-3 py-2">{{ r.budget }}</td>
-        <td class="px-3 py-2 text-rose-600">{{ r.spent }}</td>
-        <td class="px-3 py-2 text-emerald-600">{{ r.revenue }}</td>
-        <td class="px-3 py-2 font-semibold {% if r.roi and r.roi >= 0 %}text-emerald-700{% else %}text-rose-700{% endif %}">
-          {% if r.roi is not None %}{{ r.roi|floatformat:1 }}%{% else %}—{% endif %}
-        </td>
-      </tr>
-    {% empty %}
-      <tr><td colspan="5" class="px-3 py-3 italic text-slate-400">{% trans "No campaigns yet." %}</td></tr>
-    {% endfor %}
-  </tbody>
-</table>
+<div class="app-card overflow-hidden">
+  <div class="flex items-center justify-between border-b border-slate-200 px-4 py-3">
+    <div>
+      <h2 class="font-black text-slate-950">{% trans "Campaign profitability" %}</h2>
+      <p class="text-xs text-slate-500">{{ totals.campaigns }} {% trans "campaigns tracked" %}</p>
+    </div>
+    <span class="status-pill bg-indigo-50 text-indigo-700">
+      <i data-lucide="database" class="h-3.5 w-3.5"></i>
+      {% trans "Live data" %}
+    </span>
+  </div>
+  <div class="overflow-x-auto">
+    <table class="w-full min-w-[760px] text-sm">
+      <thead class="bg-slate-50 text-left text-xs uppercase text-slate-500">
+        <tr>
+          <th class="px-4 py-3">{% trans "Campaign" %}</th>
+          <th class="px-4 py-3 text-right">{% trans "Budget" %}</th>
+          <th class="px-4 py-3 text-right">{% trans "Spent" %}</th>
+          <th class="px-4 py-3 text-right">{% trans "Revenue" %}</th>
+          <th class="px-4 py-3 text-right">{% trans "ROI" %}</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-100">
+        {% for r in rows %}
+          <tr class="hover:bg-slate-50">
+            <td class="px-4 py-3">
+              <div class="font-semibold text-slate-950">{{ r.campaign.name }}</div>
+              <div class="text-xs text-slate-500">{{ r.campaign.product.name }} · {{ r.campaign.get_status_display }}</div>
+            </td>
+            <td class="px-4 py-3 text-right tabular-nums text-slate-600">{{ r.budget|intcomma }}</td>
+            <td class="px-4 py-3 text-right tabular-nums font-semibold text-rose-600">{{ r.spent|intcomma }}</td>
+            <td class="px-4 py-3 text-right tabular-nums font-semibold text-emerald-600">{{ r.revenue|intcomma }}</td>
+            <td class="px-4 py-3 text-right">
+              <span class="status-pill {% if r.roi and r.roi >= 0 %}bg-emerald-50 text-emerald-700{% else %}bg-rose-50 text-rose-700{% endif %}">
+                {% if r.roi is not None %}{{ r.roi|floatformat:1 }}%{% else %}—{% endif %}
+              </span>
+            </td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="5" class="px-4 py-6 text-center italic text-slate-400">{% trans "No campaigns yet." %}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
 {% endblock %}

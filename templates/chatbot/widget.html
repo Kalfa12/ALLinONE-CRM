@@ -1,33 +1,52 @@
 {% load i18n %}
 <div x-data='chatbotWidget()' x-cloak class="fixed bottom-4 right-4 z-50">
   <button @click="open = !open"
-          class="w-14 h-14 rounded-full bg-indigo-600 text-white text-2xl shadow-lg hover:bg-indigo-700">
-    🤖
+          class="flex h-14 w-14 items-center justify-center rounded-full bg-indigo-600 text-white shadow-xl shadow-indigo-600/25 ring-4 ring-white transition hover:bg-indigo-700"
+          title="{% trans 'Marketing Assistant' %}"
+          aria-label="{% trans 'Marketing Assistant' %}">
+    <i data-lucide="bot-message-square" class="h-6 w-6"></i>
   </button>
 
   <div x-show="open" x-transition
-       class="absolute bottom-16 right-0 w-80 max-w-[90vw] bg-white border border-slate-200 rounded-lg shadow-2xl flex flex-col"
-       style="height: 460px;">
-    <div class="px-3 py-2 border-b font-semibold text-sm flex items-center justify-between">
-      <span>🤖 {% trans "Marketing Assistant" %}</span>
-      <button @click="open=false" class="text-slate-400 hover:text-slate-700">✕</button>
+       class="absolute bottom-16 right-0 flex h-[460px] w-80 max-w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-2xl">
+    <div class="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-3 py-3">
+      <div class="flex items-center gap-2">
+        <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600 text-white">
+          <i data-lucide="sparkles" class="h-4 w-4"></i>
+        </span>
+        <div>
+          <div class="text-sm font-black text-slate-950">{% trans "Marketing Assistant" %}</div>
+          <div class="text-[11px] font-semibold text-slate-500">{% trans "CRM context aware" %}</div>
+        </div>
+      </div>
+      <button @click="open=false" class="rounded-md p-1 text-slate-400 hover:bg-white hover:text-slate-700" title="{% trans 'Close' %}">
+        <i data-lucide="x" class="h-4 w-4"></i>
+      </button>
     </div>
     <div class="flex-1 overflow-y-auto p-3 space-y-2 text-sm" x-ref="log">
       <template x-for="m in messages" :key="m.id">
         <div :class="m.role === 'user' ? 'text-right' : 'text-left'">
-          <span :class="m.role === 'user' ? 'bg-indigo-100 text-indigo-900' : 'bg-slate-100 text-slate-800'"
-                class="inline-block px-2 py-1 rounded max-w-[90%]"
+          <span :class="m.role === 'user' ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-800'"
+                class="inline-block max-w-[90%] rounded-lg px-3 py-2 leading-5 shadow-sm"
                 x-text="m.content"></span>
         </div>
       </template>
-      <div x-show="loading" class="text-xs text-slate-400">…</div>
+      <div x-show="messages.length === 0 && !loading" class="rounded-lg border border-dashed border-slate-300 bg-slate-50 p-4 text-center text-xs text-slate-500">
+        {% trans "Ask about campaigns, ROI, creatives, or product potential." %}
+      </div>
+      <div x-show="loading" class="inline-flex items-center gap-2 rounded-lg bg-slate-100 px-3 py-2 text-xs font-semibold text-slate-500">
+        <span class="h-2 w-2 animate-pulse rounded-full bg-indigo-500"></span>
+        {% trans "Thinking" %}
+      </div>
     </div>
-    <form @submit.prevent="send()" class="p-2 border-t flex gap-1">
+    <form @submit.prevent="send()" class="flex gap-2 border-t border-slate-200 p-2">
       <input x-model="draft" :disabled="loading" type="text"
              placeholder="{% trans 'Ask about campaigns, ROI, angles…' %}"
-             class="flex-1 border rounded px-2 py-1 text-sm">
+             class="min-w-0 flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200">
       <button :disabled="loading || !draft.trim()"
-              class="bg-indigo-600 text-white text-sm px-3 rounded disabled:opacity-50">↑</button>
+              class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-indigo-600 text-white disabled:opacity-50">
+        <i data-lucide="send-horizontal" class="h-4 w-4"></i>
+      </button>
     </form>
   </div>
 </div>
@@ -59,13 +78,13 @@ function chatbotWidget() {
         .then(r => r.json())
         .then(d => {
           if (d.error) {
-            this.messages.push({id: this.nextId++, role: 'assistant', content: '⚠ ' + d.error});
+            this.messages.push({id: this.nextId++, role: 'assistant', content: d.error});
           } else {
             this.sessionId = d.session_id;
             this.messages.push({id: this.nextId++, role: 'assistant', content: d.reply});
           }
         })
-        .catch(e => this.messages.push({id: this.nextId++, role: 'assistant', content: '⚠ ' + e}))
+        .catch(e => this.messages.push({id: this.nextId++, role: 'assistant', content: String(e)}))
         .finally(() => {
           this.loading = false;
           this.$nextTick(() => { this.$refs.log.scrollTop = this.$refs.log.scrollHeight; });

@@ -2,203 +2,568 @@ msgid ""
 msgstr ""
 "Project-Id-Version: marketing-crm 1.0\n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-11 22:34+0000\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5);\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5);\n"
 
-msgid "English"
-msgstr "الإنجليزية"
+#: apps/assets/models.py:7
+msgid "Problem / Solution"
+msgstr "مشكلة / حل"
 
-msgid "French"
-msgstr "الفرنسية"
+#: apps/assets/models.py:8
+msgid "Benefit"
+msgstr "فائدة"
 
-msgid "Arabic"
-msgstr "العربية"
+#: apps/assets/models.py:9
+msgid "Irresistible Offer"
+msgstr "عرض لا يقاوم"
 
-msgid "Marketing CRM"
-msgstr "نظام إدارة التسويق"
-
-msgid "Marketing Campaign & Asset Management CRM"
-msgstr "نظام إدارة الحملات التسويقية والأصول الإعلانية"
-
-msgid "Pipeline"
-msgstr "خط الأنابيب"
-
-msgid "Assets"
-msgstr "الأصول"
-
-msgid "Finance"
-msgstr "المالية"
-
-msgid "Predict"
-msgstr "تنبؤ"
-
-msgid "Login"
-msgstr "تسجيل الدخول"
-
-msgid "Logout"
-msgstr "تسجيل الخروج"
-
-msgid "Sign in"
-msgstr "تسجيل الدخول"
-
-msgid "Product Pipeline"
-msgstr "خط أنابيب المنتجات"
-
-msgid "New product"
-msgstr "منتج جديد"
-
-msgid "Planning"
-msgstr "تخطيط"
-
-msgid "Active"
-msgstr "نشط"
-
-msgid "Evaluated"
-msgstr "تم التقييم"
-
-msgid "Score"
-msgstr "النتيجة"
-
-msgid "Status"
-msgstr "الحالة"
-
+#: apps/assets/models.py:11 apps/pipeline/models.py:12
+#: apps/pipeline/models.py:44 templates/pipeline/product_form.html:12
 msgid "Name"
 msgstr "الاسم"
 
-msgid "Description"
-msgstr "الوصف"
-
-msgid "Notes"
-msgstr "ملاحظات"
-
-msgid "Create"
-msgstr "إنشاء"
-
-msgid "Save"
-msgstr "حفظ"
-
-msgid "Back to pipeline"
-msgstr "العودة إلى خط الأنابيب"
-
-msgid "Campaigns"
-msgstr "الحملات"
-
-msgid "No campaigns yet."
-msgstr "لا توجد حملات بعد."
-
-msgid "No products."
-msgstr "لا توجد منتجات."
-
-msgid "Marketing Asset Library"
-msgstr "مكتبة الأصول التسويقية"
-
-msgid "Angles"
-msgstr "الزوايا"
-
-msgid "Creatives"
-msgstr "التصاميم"
-
-msgid "Hooks"
-msgstr "الجمل الافتتاحية"
-
+#: apps/assets/models.py:13 apps/finance/models.py:17
+#: templates/finance/expense_form.html:23 templates/prediction/form.html:14
 msgid "Category"
 msgstr "الفئة"
 
+#: apps/assets/models.py:16
 msgid "Success rate (%)"
 msgstr "معدل النجاح (%)"
 
-msgid "Add angles via the admin."
-msgstr "أضف الزوايا من خلال لوحة الإدارة."
+#: apps/assets/models.py:19
+#| msgid "Angles"
+msgid "Angle"
+msgstr "زاوية"
 
-msgid "Winner"
-msgstr "الفائز"
+#: apps/assets/models.py:20 templates/assets/index.html:15
+msgid "Angles"
+msgstr "الزوايا"
 
-msgid "No creatives yet."
-msgstr "لا توجد تصاميم بعد."
+#: apps/assets/models.py:28
+msgid "Image"
+msgstr "صورة"
 
-msgid "No hooks yet."
-msgstr "لا توجد جمل افتتاحية بعد."
+#: apps/assets/models.py:29
+msgid "Video"
+msgstr "فيديو"
 
-msgid "Finance & ROI Dashboard"
-msgstr "لوحة المالية والعائد على الاستثمار"
+#: apps/assets/models.py:31
+msgid "Title"
+msgstr "العنوان"
 
-msgid "Total spent"
-msgstr "إجمالي المصروفات"
+#: apps/assets/models.py:40
+msgid "File"
+msgstr "ملف"
 
-msgid "Total revenue"
-msgstr "إجمالي الإيرادات"
+#: apps/assets/models.py:42
+msgid "Type"
+msgstr "النوع"
 
-msgid "Campaign"
-msgstr "حملة"
+#: apps/assets/models.py:44
+#| msgid "Winner"
+msgid "Winner?"
+msgstr "فائز؟"
 
-msgid "Budget"
-msgstr "الميزانية"
+#: apps/assets/models.py:48
+#| msgid "Creatives"
+msgid "Creative"
+msgstr "إعلان إبداعي"
 
-msgid "Spent"
-msgstr "المصروف"
+#: apps/assets/models.py:49 templates/assets/index.html:20
+msgid "Creatives"
+msgstr "التصاميم"
 
-msgid "Revenue"
-msgstr "الإيراد"
+#: apps/assets/models.py:58
+msgid "Social Media"
+msgstr "وسائل التواصل الاجتماعي"
 
-msgid "ROI"
-msgstr "العائد على الاستثمار"
+#: apps/assets/models.py:59
+msgid "Search"
+msgstr "بحث"
 
-msgid "Expense"
-msgstr "مصروف"
+#: apps/assets/models.py:60
+msgid "Display"
+msgstr "عرض"
 
-msgid "Log expense"
-msgstr "تسجيل مصروف"
+#: apps/assets/models.py:63
+msgid "Curiosity"
+msgstr "فضول"
 
-msgid "Log revenue"
-msgstr "تسجيل إيراد"
+#: apps/assets/models.py:64
+msgid "Pain Point"
+msgstr "نقطة ألم"
 
-msgid "Amount"
-msgstr "المبلغ"
+#: apps/assets/models.py:65
+#| msgid "Description"
+msgid "Demonstration"
+msgstr "عرض توضيحي"
 
-msgid "Date"
-msgstr "التاريخ"
+#: apps/assets/models.py:67
+msgid "Text"
+msgstr "النص"
 
-msgid "Source"
-msgstr "المصدر"
+#: apps/assets/models.py:68
+msgid "Platform"
+msgstr "المنصة"
 
-msgid "Product Potential Predictor"
-msgstr "متنبئ إمكانات المنتج"
+#: apps/assets/models.py:69
+msgid "Trigger"
+msgstr "المحفز"
 
-msgid "Estimate the potential of a new product (Low / Medium / High) using a Random Forest model trained on historical campaign data."
-msgstr "تقدير إمكانات منتج جديد (منخفضة / متوسطة / عالية) باستخدام نموذج Random Forest مدرَّب على بيانات الحملات السابقة."
+#: apps/assets/models.py:74
+msgid "Performance score"
+msgstr "درجة الأداء"
 
-msgid "Price ($)"
-msgstr "السعر ($)"
+#: apps/assets/models.py:77
+#| msgid "Hooks"
+msgid "Hook"
+msgstr "خطاف"
 
-msgid "Competition level"
-msgstr "مستوى المنافسة"
+#: apps/assets/models.py:78 templates/assets/index.html:25
+msgid "Hooks"
+msgstr "الجمل الافتتاحية"
 
-msgid "Angle type"
-msgstr "نوع الزاوية"
+#: apps/core/context_processors.py:10 templates/pipeline/kanban.html:3
+msgid "Pipeline"
+msgstr "خط الأنابيب"
 
-msgid "Initial CTR (0-1)"
-msgstr "نسبة النقر الأولية (0-1)"
+#: apps/core/context_processors.py:11
+msgid "Assets"
+msgstr "الأصول"
 
+#: apps/core/context_processors.py:12
+msgid "Finance"
+msgstr "المالية"
+
+#: apps/core/context_processors.py:13 templates/prediction/form.html:41
 msgid "Predict"
 msgstr "تنبؤ"
 
-msgid "Result"
+#: apps/finance/models.py:7
+msgid "Advertising"
+msgstr "إعلانات"
+
+#: apps/finance/models.py:8
+#| msgid "Product Pipeline"
+msgid "Production"
+msgstr "إنتاج"
+
+#: apps/finance/models.py:9
+msgid "Tools"
+msgstr "أدوات"
+
+#: apps/finance/models.py:10
+msgid "Other"
+msgstr "أخرى"
+
+#: apps/finance/models.py:15 apps/finance/models.py:31
+#: templates/finance/expense_form.html:19
+#: templates/finance/revenue_form.html:19
+msgid "Amount"
+msgstr "المبلغ"
+
+#: apps/finance/models.py:19 apps/finance/models.py:33
+#: templates/finance/expense_form.html:30
+#: templates/finance/revenue_form.html:23
+msgid "Date"
+msgstr "التاريخ"
+
+#: apps/finance/models.py:22 templates/finance/dashboard.html:13
+msgid "Expense"
+msgstr "مصروف"
+
+#: apps/finance/models.py:23
+#| msgid "Expense"
+msgid "Expenses"
+msgstr "المصاريف"
+
+#: apps/finance/models.py:32 templates/finance/revenue_form.html:28
+msgid "Source"
+msgstr "المصدر"
+
+#: apps/finance/models.py:36 templates/finance/dashboard.html:17
+#: templates/finance/dashboard.html:73
+msgid "Revenue"
+msgstr "الإيراد"
+
+#: apps/finance/models.py:37
+#| msgid "Revenue"
+msgid "Revenues"
+msgstr "الإيرادات"
+
+#: apps/pipeline/models.py:8 templates/pipeline/kanban.html:60
+msgid "Planning"
+msgstr "تخطيط"
+
+#: apps/pipeline/models.py:9 templates/pipeline/kanban.html:28
+#: templates/pipeline/kanban.html:61
+msgid "Active"
+msgstr "نشط"
+
+#: apps/pipeline/models.py:10 templates/pipeline/kanban.html:62
+msgid "Evaluated"
+msgstr "تم التقييم"
+
+#: apps/pipeline/models.py:13 templates/pipeline/product_form.html:16
+msgid "Description"
+msgstr "الوصف"
+
+#: apps/pipeline/models.py:15 templates/pipeline/product_form.html:21
+msgid "Status"
+msgstr "الحالة"
+
+#: apps/pipeline/models.py:17 templates/pipeline/product_form.html:29
+msgid "Score"
 msgstr "النتيجة"
 
-msgid "Confidence"
-msgstr "درجة الثقة"
+#: apps/pipeline/models.py:18 templates/pipeline/product_form.html:34
+msgid "Notes"
+msgstr "ملاحظات"
 
-msgid "Submit the form to see a prediction."
-msgstr "أرسل النموذج لرؤية التنبؤ."
+#: apps/pipeline/models.py:27
+#| msgid "New product"
+msgid "Product"
+msgstr "منتج"
 
-msgid "Recent predictions"
-msgstr "التنبؤات الأخيرة"
+#: apps/pipeline/models.py:28 templates/pipeline/kanban.html:21
+#| msgid "No products."
+msgid "Products"
+msgstr "المنتجات"
 
+#: apps/pipeline/models.py:37
+msgid "Draft"
+msgstr "مسودة"
+
+#: apps/pipeline/models.py:38
+#| msgid "Planning"
+msgid "Running"
+msgstr "قيد التشغيل"
+
+#: apps/pipeline/models.py:39
+msgid "Done"
+msgstr "منتهية"
+
+#: apps/pipeline/models.py:45
+msgid "Start date"
+msgstr "تاريخ البداية"
+
+#: apps/pipeline/models.py:46
+msgid "End date"
+msgstr "تاريخ النهاية"
+
+#: apps/pipeline/models.py:47 templates/finance/dashboard.html:71
+#: templates/pipeline/product_detail.html:69
+msgid "Budget"
+msgstr "الميزانية"
+
+#: apps/pipeline/models.py:53 templates/finance/dashboard.html:70
+#: templates/finance/expense_form.html:12
+#: templates/finance/revenue_form.html:12
+msgid "Campaign"
+msgstr "حملة"
+
+#: apps/pipeline/models.py:54 templates/pipeline/kanban.html:35
+#: templates/pipeline/product_detail.html:33
+#: templates/pipeline/product_detail.html:52
+msgid "Campaigns"
+msgstr "الحملات"
+
+#: crm_project/settings.py:89
+msgid "English"
+msgstr "الإنجليزية"
+
+#: crm_project/settings.py:90
+msgid "French"
+msgstr "الفرنسية"
+
+#: crm_project/settings.py:91
+msgid "Arabic"
+msgstr "العربية"
+
+#: templates/assets/index.html:5
+msgid "Creative intelligence"
+msgstr "ذكاء إبداعي"
+
+#: templates/assets/index.html:6
+msgid "Marketing Asset Library"
+msgstr "مكتبة الأصول التسويقية"
+
+#: templates/assets/index.html:7
+msgid "Review tested angles, winning creatives, and reusable hooks."
+msgstr ""
+"راجع الزوايا المختبرة والإعلانات الفائزة والخطافات القابلة لإعادة الاستخدام."
+
+#: templates/assets/index.html:46
+msgid "Add angles via the admin."
+msgstr "أضف الزوايا من خلال لوحة الإدارة."
+
+#: templates/assets/index.html:63
+msgid "Winner"
+msgstr "الفائز"
+
+#: templates/assets/index.html:73
+msgid "No creatives yet."
+msgstr "لا توجد تصاميم بعد."
+
+#: templates/assets/index.html:89
+#| msgid "Score"
+msgid "score"
+msgstr "الدرجة"
+
+#: templates/assets/index.html:95
+msgid "No hooks yet."
+msgstr "لا توجد جمل افتتاحية بعد."
+
+#: templates/auth/login.html:3 templates/auth/login.html:28
+#: templates/base.html:80
+msgid "Login"
+msgstr "تسجيل الدخول"
+
+#: templates/auth/login.html:10
+msgid "Sign in"
+msgstr "تسجيل الدخول"
+
+#: templates/auth/login.html:11
+msgid "Access the marketing CRM workspace."
+msgstr "ادخل إلى مساحة عمل إدارة التسويق."
+
+#: templates/base.html:7 templates/base.html:37
+#: templates/pipeline/kanban.html:3
+msgid "Marketing CRM"
+msgstr "نظام إدارة التسويق"
+
+#: templates/base.html:38
+msgid "Campaign command center"
+msgstr "مركز قيادة الحملات"
+
+#: templates/base.html:74 templates/base.html:76
+msgid "Logout"
+msgstr "تسجيل الخروج"
+
+#: templates/base.html:107
+msgid "Marketing Campaign & Asset Management CRM"
+msgstr "نظام إدارة الحملات التسويقية والأصول الإعلانية"
+
+#: templates/chatbot/widget.html:5 templates/chatbot/widget.html:6
+#: templates/chatbot/widget.html:18
 msgid "Marketing Assistant"
 msgstr "المساعد التسويقي"
 
+#: templates/chatbot/widget.html:19
+msgid "CRM context aware"
+msgstr "مدعوم بسياق CRM"
+
+#: templates/chatbot/widget.html:22
+msgid "Close"
+msgstr "إغلاق"
+
+#: templates/chatbot/widget.html:35
+#| msgid "Ask about campaigns, ROI, angles…"
+msgid "Ask about campaigns, ROI, creatives, or product potential."
+msgstr "اسأل عن الحملات أو العائد أو الإعلانات أو إمكانات المنتج."
+
+#: templates/chatbot/widget.html:39
+msgid "Thinking"
+msgstr "جار التفكير"
+
+#: templates/chatbot/widget.html:44
 msgid "Ask about campaigns, ROI, angles…"
 msgstr "اسأل عن الحملات أو العائد أو الزوايا…"
+
+#: templates/finance/dashboard.html:6
+msgid "Performance control"
+msgstr "مراقبة الأداء"
+
+#: templates/finance/dashboard.html:7
+msgid "Finance & ROI Dashboard"
+msgstr "لوحة المالية والعائد على الاستثمار"
+
+#: templates/finance/dashboard.html:8
+msgid "Compare spend, revenue, and campaign profitability in one view."
+msgstr "قارن المصاريف والإيرادات وربحية الحملات في عرض واحد."
+
+#: templates/finance/dashboard.html:25
+msgid "Total spent"
+msgstr "إجمالي المصروفات"
+
+#: templates/finance/dashboard.html:32
+msgid "Total revenue"
+msgstr "إجمالي الإيرادات"
+
+#: templates/finance/dashboard.html:39
+#| msgid "New product"
+msgid "Net profit"
+msgstr "صافي الربح"
+
+#: templates/finance/dashboard.html:46
+msgid "Avg. ROI"
+msgstr "متوسط ROI"
+
+#: templates/finance/dashboard.html:58
+msgid "Campaign profitability"
+msgstr "ربحية الحملات"
+
+#: templates/finance/dashboard.html:59
+#| msgid "No campaigns yet."
+msgid "campaigns tracked"
+msgstr "حملات متتبعة"
+
+#: templates/finance/dashboard.html:63
+msgid "Live data"
+msgstr "بيانات مباشرة"
+
+#: templates/finance/dashboard.html:72
+#: templates/pipeline/product_detail.html:73
+msgid "Spent"
+msgstr "المصروف"
+
+#: templates/finance/dashboard.html:74
+#: templates/pipeline/product_detail.html:77
+msgid "ROI"
+msgstr "العائد على الاستثمار"
+
+#: templates/finance/dashboard.html:94
+#: templates/pipeline/product_detail.html:85
+msgid "No campaigns yet."
+msgstr "لا توجد حملات بعد."
+
+#: templates/finance/expense_form.html:6 templates/finance/revenue_form.html:6
+#| msgid "Finance"
+msgid "Finance input"
+msgstr "إدخال مالي"
+
+#: templates/finance/expense_form.html:7
+msgid "Log expense"
+msgstr "تسجيل مصروف"
+
+#: templates/finance/expense_form.html:35
+#: templates/finance/revenue_form.html:33
+msgid "Save"
+msgstr "حفظ"
+
+#: templates/finance/revenue_form.html:7
+msgid "Log revenue"
+msgstr "تسجيل إيراد"
+
+#: templates/pipeline/kanban.html:7
+msgid "Commercial workflow"
+msgstr "سير العمل التجاري"
+
+#: templates/pipeline/kanban.html:8
+msgid "Product Pipeline"
+msgstr "خط أنابيب المنتجات"
+
+#: templates/pipeline/kanban.html:9
+msgid "Track product ideas from validation to campaign performance."
+msgstr "تابع أفكار المنتجات من التحقق إلى أداء الحملات."
+
+#: templates/pipeline/kanban.html:14 templates/pipeline/product_form.html:7
+msgid "New product"
+msgstr "منتج جديد"
+
+#: templates/pipeline/kanban.html:42
+msgid "Avg. score"
+msgstr "متوسط الدرجة"
+
+#: templates/pipeline/kanban.html:83
+#| msgid "Campaigns"
+msgid "campaigns"
+msgstr "حملات"
+
+#: templates/pipeline/kanban.html:85
+msgid "Open"
+msgstr "فتح"
+
+#: templates/pipeline/kanban.html:90
+msgid "No products."
+msgstr "لا توجد منتجات."
+
+#: templates/pipeline/product_detail.html:6
+msgid "Back to pipeline"
+msgstr "العودة إلى خط الأنابيب"
+
+#: templates/pipeline/product_detail.html:14
+#| msgid "Product Potential Predictor"
+msgid "Product record"
+msgstr "سجل المنتج"
+
+#: templates/pipeline/product_detail.html:29
+#| msgid "Product Potential Predictor"
+msgid "Potential score"
+msgstr "درجة الإمكانات"
+
+#: templates/pipeline/product_detail.html:37
+msgid "Owner"
+msgstr "المالك"
+
+#: templates/pipeline/product_detail.html:44
+msgid "Strategic notes"
+msgstr "ملاحظات استراتيجية"
+
+#: templates/pipeline/product_form.html:6
+#| msgid "Pipeline"
+msgid "Pipeline input"
+msgstr "إدخال خط الأنابيب"
+
+#: templates/pipeline/product_form.html:39
+msgid "Create"
+msgstr "إنشاء"
+
+#: templates/prediction/form.html:5
+msgid "AI assisted decisioning"
+msgstr "اتخاذ قرار بمساعدة الذكاء الاصطناعي"
+
+#: templates/prediction/form.html:6
+msgid "Product Potential Predictor"
+msgstr "متنبئ إمكانات المنتج"
+
+#: templates/prediction/form.html:7
+#| msgid ""
+#| "Estimate the potential of a new product (Low / Medium / High) using a "
+#| "Random Forest model trained on historical campaign data."
+msgid ""
+"Estimate the potential of a new product using a Random Forest model trained "
+"on historical campaign data."
+msgstr ""
+"قدّر إمكانات منتج جديد باستخدام نموذج Random Forest مدرّب على بيانات الحملات "
+"التاريخية.تقدير إمكانات منتج جديد (منخفضة / متوسطة / عالية) باستخدام نموذج "
+"Random Forest مدرَّب على بيانات الحملات السابقة."
+
+#: templates/prediction/form.html:20
+msgid "Price ($)"
+msgstr "السعر ($)"
+
+#: templates/prediction/form.html:24
+msgid "Competition level"
+msgstr "مستوى المنافسة"
+
+#: templates/prediction/form.html:30
+msgid "Angle type"
+msgstr "نوع الزاوية"
+
+#: templates/prediction/form.html:36
+msgid "Initial CTR (0-1)"
+msgstr "نسبة النقر الأولية (0-1)"
+
+#: templates/prediction/form.html:53
+#| msgid "Product Potential Predictor"
+msgid "Predicted potential"
+msgstr "الإمكانات المتوقعة"
+
+#: templates/prediction/form.html:60
+msgid "Confidence"
+msgstr "درجة الثقة"
+
+#: templates/prediction/form.html:66
+msgid "Submit the form to see a prediction."
+msgstr "أرسل النموذج لرؤية التنبؤ."
+
+#: templates/prediction/form.html:71
+msgid "Recent predictions"
+msgstr "التنبؤات الأخيرة"

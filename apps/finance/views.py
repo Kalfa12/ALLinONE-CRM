@@ -23,9 +23,15 @@ def dashboard(request):
             'revenue': revenue,
             'roi': roi,
         })
+    total_spent = sum((r['spent'] for r in rows), Decimal('0'))
+    total_revenue = sum((r['revenue'] for r in rows), Decimal('0'))
+    roi_values = [r['roi'] for r in rows if r['roi'] is not None]
     totals = {
-        'spent': sum((r['spent'] for r in rows), Decimal('0')),
-        'revenue': sum((r['revenue'] for r in rows), Decimal('0')),
+        'spent': total_spent,
+        'revenue': total_revenue,
+        'profit': total_revenue - total_spent,
+        'average_roi': sum(roi_values) / len(roi_values) if roi_values else None,
+        'campaigns': len(rows),
     }
     return render(request, 'finance/dashboard.html', {
         'rows': rows,

@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_http_methods, require_POST
 
-from .models import Product
+from .models import Campaign, Product
 
 
 @login_required
@@ -12,12 +12,23 @@ def kanban(request):
         status: list(Product.objects.filter(status=status))
         for status, _ in Product.Status.choices
     }
+    all_products = [product for products in products_by_status.values() for product in products]
+    average_score = (
+        sum(product.score for product in all_products) / len(all_products)
+        if all_products else 0
+    )
     return render(request, 'pipeline/kanban.html', {
         'columns': [
             (Product.Status.PLANNING, products_by_status[Product.Status.PLANNING]),
             (Product.Status.ACTIVE, products_by_status[Product.Status.ACTIVE]),
             (Product.Status.EVALUATED, products_by_status[Product.Status.EVALUATED]),
         ],
+        'metrics': {
+            'products': len(all_products),
+            'active': len(products_by_status[Product.Status.ACTIVE]),
+            'campaigns': Campaign.objects.count(),
+            'average_score': average_score,
+        },
         'statuses': Product.Status,
     })
 

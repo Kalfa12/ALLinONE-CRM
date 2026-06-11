@@ -1,62 +1,84 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
-<h1 class="text-2xl font-bold mb-2">{% trans "Product Potential Predictor" %}</h1>
-<p class="text-sm text-slate-500 mb-4">{% trans "Estimate the potential of a new product (Low / Medium / High) using a Random Forest model trained on historical campaign data." %}</p>
+<div class="mb-5">
+  <p class="metric-label">{% trans "AI assisted decisioning" %}</p>
+  <h1 class="text-3xl font-black tracking-tight text-slate-950">{% trans "Product Potential Predictor" %}</h1>
+  <p class="mt-1 max-w-3xl text-sm text-slate-500">{% trans "Estimate the potential of a new product using a Random Forest model trained on historical campaign data." %}</p>
+</div>
 
 <div class="grid md:grid-cols-2 gap-4">
-  <form method="post" class="bg-white p-5 rounded border border-slate-200 space-y-3">
+  <form method="post" class="app-card p-5 space-y-4">
     {% csrf_token %}
     <div>
-      <label class="block text-sm font-medium">{% trans "Category" %}</label>
-      <select name="category" class="w-full border rounded px-2 py-1.5">
+      <label class="mb-1 block text-sm font-bold text-slate-700">{% trans "Category" %}</label>
+      <select name="category" class="app-input">
         {% for c in categories %}<option value="{{ c }}">{{ c }}</option>{% endfor %}
       </select>
     </div>
     <div>
-      <label class="block text-sm font-medium">{% trans "Price ($)" %}</label>
-      <input type="number" step="0.01" name="price" value="29.90" class="w-full border rounded px-2 py-1.5">
+      <label class="mb-1 block text-sm font-bold text-slate-700">{% trans "Price ($)" %}</label>
+      <input type="number" step="0.01" name="price" value="29.90" class="app-input">
     </div>
     <div>
-      <label class="block text-sm font-medium">{% trans "Competition level" %}</label>
-      <select name="competition_level" class="w-full border rounded px-2 py-1.5">
+      <label class="mb-1 block text-sm font-bold text-slate-700">{% trans "Competition level" %}</label>
+      <select name="competition_level" class="app-input">
         {% for c in competition_levels %}<option value="{{ c }}">{{ c }}</option>{% endfor %}
       </select>
     </div>
     <div>
-      <label class="block text-sm font-medium">{% trans "Angle type" %}</label>
-      <select name="angle_type" class="w-full border rounded px-2 py-1.5">
+      <label class="mb-1 block text-sm font-bold text-slate-700">{% trans "Angle type" %}</label>
+      <select name="angle_type" class="app-input">
         {% for a in angles %}<option value="{{ a }}">{{ a }}</option>{% endfor %}
       </select>
     </div>
     <div>
-      <label class="block text-sm font-medium">{% trans "Initial CTR (0-1)" %}</label>
-      <input type="number" step="0.001" name="initial_ctr" value="0.02" class="w-full border rounded px-2 py-1.5">
+      <label class="mb-1 block text-sm font-bold text-slate-700">{% trans "Initial CTR (0-1)" %}</label>
+      <input type="number" step="0.001" name="initial_ctr" value="0.02" class="app-input">
     </div>
-    <button class="px-3 py-2 bg-indigo-600 text-white rounded">{% trans "Predict" %}</button>
+    <button class="app-button app-button-primary w-full">
+      <i data-lucide="sparkles" class="h-4 w-4"></i>
+      {% trans "Predict" %}
+    </button>
   </form>
 
-  <div class="bg-white p-5 rounded border border-slate-200">
+  <div class="app-card p-5">
     {% if error %}
-      <div class="text-rose-700 text-sm">{{ error }}</div>
+      <div class="rounded-lg bg-rose-50 p-3 text-sm font-semibold text-rose-700">{{ error }}</div>
     {% elif result %}
-      <h2 class="font-semibold mb-2">{% trans "Result" %}</h2>
-      <div class="text-3xl font-bold
-        {% if result.class == 'High' %}text-emerald-600
-        {% elif result.class == 'Medium' %}text-amber-600
-        {% else %}text-rose-600{% endif %}">
-        {{ result.class }}
+      <div class="rounded-xl border p-5
+        {% if result.class == 'High' %}border-emerald-200 bg-emerald-50
+        {% elif result.class == 'Medium' %}border-amber-200 bg-amber-50
+        {% else %}border-rose-200 bg-rose-50{% endif %}">
+        <div class="metric-label">{% trans "Predicted potential" %}</div>
+        <div class="mt-2 text-4xl font-black
+          {% if result.class == 'High' %}text-emerald-700
+          {% elif result.class == 'Medium' %}text-amber-700
+          {% else %}text-rose-700{% endif %}">
+          {{ result.class }}
+        </div>
+        <div class="mt-2 text-sm font-semibold text-slate-600">{% trans "Confidence" %}: {{ result.confidence|floatformat:2 }}</div>
       </div>
-      <div class="text-sm text-slate-500 mt-1">{% trans "Confidence" %}: {{ result.confidence|floatformat:2 }}</div>
-      <pre class="mt-3 text-xs bg-slate-50 p-2 rounded">{{ result.features }}</pre>
+      <pre class="mt-3 overflow-x-auto rounded-lg bg-slate-950 p-3 text-xs text-slate-100">{{ result.features }}</pre>
     {% else %}
-      <p class="text-sm text-slate-500">{% trans "Submit the form to see a prediction." %}</p>
+      <div class="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-6 text-center">
+        <i data-lucide="brain-circuit" class="mx-auto h-8 w-8 text-indigo-500"></i>
+        <p class="mt-3 text-sm font-semibold text-slate-600">{% trans "Submit the form to see a prediction." %}</p>
+      </div>
     {% endif %}
 
     {% if recent %}
-      <h3 class="text-sm font-semibold mt-4 mb-1">{% trans "Recent predictions" %}</h3>
-      <ul class="text-xs space-y-1">
-        {% for r in recent %}<li>{{ r.created_at|date:"H:i" }} → <strong>{{ r.predicted_class }}</strong> ({{ r.confidence|floatformat:2 }})</li>{% endfor %}
+      <h3 class="mt-5 mb-2 text-sm font-black text-slate-950">{% trans "Recent predictions" %}</h3>
+      <ul class="space-y-2 text-sm">
+        {% for r in recent %}
+          <li class="flex items-center justify-between rounded-lg border border-slate-200 px-3 py-2">
+            <span class="text-slate-500">{{ r.created_at|date:"H:i" }}</span>
+            <span class="status-pill {% if r.predicted_class == 'High' %}bg-emerald-50 text-emerald-700{% elif r.predicted_class == 'Medium' %}bg-amber-50 text-amber-700{% else %}bg-rose-50 text-rose-700{% endif %}">
+              {{ r.predicted_class }}
+            </span>
+            <span class="font-semibold text-slate-600">{{ r.confidence|floatformat:2 }}</span>
+          </li>
+        {% endfor %}
       </ul>
     {% endif %}
   </div>

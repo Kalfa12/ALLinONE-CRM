@@ -1,7 +1,539 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: marketing-crm 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-11 22:34+0000\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: apps/assets/models.py:7
+msgid "Problem / Solution"
+msgstr ""
+
+#: apps/assets/models.py:8
+msgid "Benefit"
+msgstr ""
+
+#: apps/assets/models.py:9
+msgid "Irresistible Offer"
+msgstr ""
+
+#: apps/assets/models.py:11 apps/pipeline/models.py:12
+#: apps/pipeline/models.py:44 templates/pipeline/product_form.html:12
+msgid "Name"
+msgstr ""
+
+#: apps/assets/models.py:13 apps/finance/models.py:17
+#: templates/finance/expense_form.html:23 templates/prediction/form.html:14
+msgid "Category"
+msgstr ""
+
+#: apps/assets/models.py:16
+msgid "Success rate (%)"
+msgstr ""
+
+#: apps/assets/models.py:19
+msgid "Angle"
+msgstr ""
+
+#: apps/assets/models.py:20 templates/assets/index.html:15
+msgid "Angles"
+msgstr ""
+
+#: apps/assets/models.py:28
+msgid "Image"
+msgstr ""
+
+#: apps/assets/models.py:29
+msgid "Video"
+msgstr ""
+
+#: apps/assets/models.py:31
+msgid "Title"
+msgstr ""
+
+#: apps/assets/models.py:40
+msgid "File"
+msgstr ""
+
+#: apps/assets/models.py:42
+msgid "Type"
+msgstr ""
+
+#: apps/assets/models.py:44
+msgid "Winner?"
+msgstr ""
+
+#: apps/assets/models.py:48
+msgid "Creative"
+msgstr ""
+
+#: apps/assets/models.py:49 templates/assets/index.html:20
+msgid "Creatives"
+msgstr ""
+
+#: apps/assets/models.py:58
+msgid "Social Media"
+msgstr ""
+
+#: apps/assets/models.py:59
+msgid "Search"
+msgstr ""
+
+#: apps/assets/models.py:60
+msgid "Display"
+msgstr ""
+
+#: apps/assets/models.py:63
+msgid "Curiosity"
+msgstr ""
+
+#: apps/assets/models.py:64
+msgid "Pain Point"
+msgstr ""
+
+#: apps/assets/models.py:65
+msgid "Demonstration"
+msgstr ""
+
+#: apps/assets/models.py:67
+msgid "Text"
+msgstr ""
+
+#: apps/assets/models.py:68
+msgid "Platform"
+msgstr ""
+
+#: apps/assets/models.py:69
+msgid "Trigger"
+msgstr ""
+
+#: apps/assets/models.py:74
+msgid "Performance score"
+msgstr ""
+
+#: apps/assets/models.py:77
+msgid "Hook"
+msgstr ""
+
+#: apps/assets/models.py:78 templates/assets/index.html:25
+msgid "Hooks"
+msgstr ""
+
+#: apps/core/context_processors.py:10 templates/pipeline/kanban.html:3
+msgid "Pipeline"
+msgstr ""
+
+#: apps/core/context_processors.py:11
+msgid "Assets"
+msgstr ""
+
+#: apps/core/context_processors.py:12
+msgid "Finance"
+msgstr ""
+
+#: apps/core/context_processors.py:13 templates/prediction/form.html:41
+msgid "Predict"
+msgstr ""
+
+#: apps/finance/models.py:7
+msgid "Advertising"
+msgstr ""
+
+#: apps/finance/models.py:8
+msgid "Production"
+msgstr ""
+
+#: apps/finance/models.py:9
+msgid "Tools"
+msgstr ""
+
+#: apps/finance/models.py:10
+msgid "Other"
+msgstr ""
+
+#: apps/finance/models.py:15 apps/finance/models.py:31
+#: templates/finance/expense_form.html:19
+#: templates/finance/revenue_form.html:19
+msgid "Amount"
+msgstr ""
+
+#: apps/finance/models.py:19 apps/finance/models.py:33
+#: templates/finance/expense_form.html:30
+#: templates/finance/revenue_form.html:23
+msgid "Date"
+msgstr ""
+
+#: apps/finance/models.py:22 templates/finance/dashboard.html:13
+msgid "Expense"
+msgstr ""
+
+#: apps/finance/models.py:23
+msgid "Expenses"
+msgstr ""
+
+#: apps/finance/models.py:32 templates/finance/revenue_form.html:28
+msgid "Source"
+msgstr ""
+
+#: apps/finance/models.py:36 templates/finance/dashboard.html:17
+#: templates/finance/dashboard.html:73
+msgid "Revenue"
+msgstr ""
+
+#: apps/finance/models.py:37
+msgid "Revenues"
+msgstr ""
+
+#: apps/pipeline/models.py:8 templates/pipeline/kanban.html:60
+msgid "Planning"
+msgstr ""
+
+#: apps/pipeline/models.py:9 templates/pipeline/kanban.html:28
+#: templates/pipeline/kanban.html:61
+msgid "Active"
+msgstr ""
+
+#: apps/pipeline/models.py:10 templates/pipeline/kanban.html:62
+msgid "Evaluated"
+msgstr ""
+
+#: apps/pipeline/models.py:13 templates/pipeline/product_form.html:16
+msgid "Description"
+msgstr ""
+
+#: apps/pipeline/models.py:15 templates/pipeline/product_form.html:21
+msgid "Status"
+msgstr ""
+
+#: apps/pipeline/models.py:17 templates/pipeline/product_form.html:29
+msgid "Score"
+msgstr ""
+
+#: apps/pipeline/models.py:18 templates/pipeline/product_form.html:34
+msgid "Notes"
+msgstr ""
+
+#: apps/pipeline/models.py:27
+msgid "Product"
+msgstr ""
+
+#: apps/pipeline/models.py:28 templates/pipeline/kanban.html:21
+msgid "Products"
+msgstr ""
+
+#: apps/pipeline/models.py:37
+msgid "Draft"
+msgstr ""
+
+#: apps/pipeline/models.py:38
+msgid "Running"
+msgstr ""
+
+#: apps/pipeline/models.py:39
+msgid "Done"
+msgstr ""
+
+#: apps/pipeline/models.py:45
+msgid "Start date"
+msgstr ""
+
+#: apps/pipeline/models.py:46
+msgid "End date"
+msgstr ""
+
+#: apps/pipeline/models.py:47 templates/finance/dashboard.html:71
+#: templates/pipeline/product_detail.html:69
+msgid "Budget"
+msgstr ""
+
+#: apps/pipeline/models.py:53 templates/finance/dashboard.html:70
+#: templates/finance/expense_form.html:12
+#: templates/finance/revenue_form.html:12
+msgid "Campaign"
+msgstr ""
+
+#: apps/pipeline/models.py:54 templates/pipeline/kanban.html:35
+#: templates/pipeline/product_detail.html:33
+#: templates/pipeline/product_detail.html:52
+msgid "Campaigns"
+msgstr ""
+
+#: crm_project/settings.py:89
+msgid "English"
+msgstr ""
+
+#: crm_project/settings.py:90
+msgid "French"
+msgstr ""
+
+#: crm_project/settings.py:91
+msgid "Arabic"
+msgstr ""
+
+#: templates/assets/index.html:5
+msgid "Creative intelligence"
+msgstr ""
+
+#: templates/assets/index.html:6
+msgid "Marketing Asset Library"
+msgstr ""
+
+#: templates/assets/index.html:7
+msgid "Review tested angles, winning creatives, and reusable hooks."
+msgstr ""
+
+#: templates/assets/index.html:46
+msgid "Add angles via the admin."
+msgstr ""
+
+#: templates/assets/index.html:63
+msgid "Winner"
+msgstr ""
+
+#: templates/assets/index.html:73
+msgid "No creatives yet."
+msgstr ""
+
+#: templates/assets/index.html:89
+msgid "score"
+msgstr ""
+
+#: templates/assets/index.html:95
+msgid "No hooks yet."
+msgstr ""
+
+#: templates/auth/login.html:3 templates/auth/login.html:28
+#: templates/base.html:80
+msgid "Login"
+msgstr ""
+
+#: templates/auth/login.html:10
+msgid "Sign in"
+msgstr ""
+
+#: templates/auth/login.html:11
+msgid "Access the marketing CRM workspace."
+msgstr ""
+
+#: templates/base.html:7 templates/base.html:37
+#: templates/pipeline/kanban.html:3
+msgid "Marketing CRM"
+msgstr ""
+
+#: templates/base.html:38
+msgid "Campaign command center"
+msgstr ""
+
+#: templates/base.html:74 templates/base.html:76
+msgid "Logout"
+msgstr ""
+
+#: templates/base.html:107
+msgid "Marketing Campaign & Asset Management CRM"
+msgstr ""
+
+#: templates/chatbot/widget.html:5 templates/chatbot/widget.html:6
+#: templates/chatbot/widget.html:18
+msgid "Marketing Assistant"
+msgstr ""
+
+#: templates/chatbot/widget.html:19
+msgid "CRM context aware"
+msgstr ""
+
+#: templates/chatbot/widget.html:22
+msgid "Close"
+msgstr ""
+
+#: templates/chatbot/widget.html:35
+msgid "Ask about campaigns, ROI, creatives, or product potential."
+msgstr ""
+
+#: templates/chatbot/widget.html:39
+msgid "Thinking"
+msgstr ""
+
+#: templates/chatbot/widget.html:44
+msgid "Ask about campaigns, ROI, angles…"
+msgstr ""
+
+#: templates/finance/dashboard.html:6
+msgid "Performance control"
+msgstr ""
+
+#: templates/finance/dashboard.html:7
+msgid "Finance & ROI Dashboard"
+msgstr ""
+
+#: templates/finance/dashboard.html:8
+msgid "Compare spend, revenue, and campaign profitability in one view."
+msgstr ""
+
+#: templates/finance/dashboard.html:25
+msgid "Total spent"
+msgstr ""
+
+#: templates/finance/dashboard.html:32
+msgid "Total revenue"
+msgstr ""
+
+#: templates/finance/dashboard.html:39
+msgid "Net profit"
+msgstr ""
+
+#: templates/finance/dashboard.html:46
+msgid "Avg. ROI"
+msgstr ""
+
+#: templates/finance/dashboard.html:58
+msgid "Campaign profitability"
+msgstr ""
+
+#: templates/finance/dashboard.html:59
+msgid "campaigns tracked"
+msgstr ""
+
+#: templates/finance/dashboard.html:63
+msgid "Live data"
+msgstr ""
+
+#: templates/finance/dashboard.html:72
+#: templates/pipeline/product_detail.html:73
+msgid "Spent"
+msgstr ""
+
+#: templates/finance/dashboard.html:74
+#: templates/pipeline/product_detail.html:77
+msgid "ROI"
+msgstr ""
+
+#: templates/finance/dashboard.html:94
+#: templates/pipeline/product_detail.html:85
+msgid "No campaigns yet."
+msgstr ""
+
+#: templates/finance/expense_form.html:6 templates/finance/revenue_form.html:6
+msgid "Finance input"
+msgstr ""
+
+#: templates/finance/expense_form.html:7
+msgid "Log expense"
+msgstr ""
+
+#: templates/finance/expense_form.html:35
+#: templates/finance/revenue_form.html:33
+msgid "Save"
+msgstr ""
+
+#: templates/finance/revenue_form.html:7
+msgid "Log revenue"
+msgstr ""
+
+#: templates/pipeline/kanban.html:7
+msgid "Commercial workflow"
+msgstr ""
+
+#: templates/pipeline/kanban.html:8
+msgid "Product Pipeline"
+msgstr ""
+
+#: templates/pipeline/kanban.html:9
+msgid "Track product ideas from validation to campaign performance."
+msgstr ""
+
+#: templates/pipeline/kanban.html:14 templates/pipeline/product_form.html:7
+msgid "New product"
+msgstr ""
+
+#: templates/pipeline/kanban.html:42
+msgid "Avg. score"
+msgstr ""
+
+#: templates/pipeline/kanban.html:83
+msgid "campaigns"
+msgstr ""
+
+#: templates/pipeline/kanban.html:85
+msgid "Open"
+msgstr ""
+
+#: templates/pipeline/kanban.html:90
+msgid "No products."
+msgstr ""
+
+#: templates/pipeline/product_detail.html:6
+msgid "Back to pipeline"
+msgstr ""
+
+#: templates/pipeline/product_detail.html:14
+msgid "Product record"
+msgstr ""
+
+#: templates/pipeline/product_detail.html:29
+msgid "Potential score"
+msgstr ""
+
+#: templates/pipeline/product_detail.html:37
+msgid "Owner"
+msgstr ""
+
+#: templates/pipeline/product_detail.html:44
+msgid "Strategic notes"
+msgstr ""
+
+#: templates/pipeline/product_form.html:6
+msgid "Pipeline input"
+msgstr ""
+
+#: templates/pipeline/product_form.html:39
+msgid "Create"
+msgstr ""
+
+#: templates/prediction/form.html:5
+msgid "AI assisted decisioning"
+msgstr ""
+
+#: templates/prediction/form.html:6
+msgid "Product Potential Predictor"
+msgstr ""
+
+#: templates/prediction/form.html:7
+msgid ""
+"Estimate the potential of a new product using a Random Forest model trained "
+"on historical campaign data."
+msgstr ""
+
+#: templates/prediction/form.html:20
+msgid "Price ($)"
+msgstr ""
+
+#: templates/prediction/form.html:24
+msgid "Competition level"
+msgstr ""
+
+#: templates/prediction/form.html:30
+msgid "Angle type"
+msgstr ""
+
+#: templates/prediction/form.html:36
+msgid "Initial CTR (0-1)"
+msgstr ""
+
+#: templates/prediction/form.html:53
+msgid "Predicted potential"
+msgstr ""
+
+#: templates/prediction/form.html:60
+msgid "Confidence"
+msgstr ""
+
+#: templates/prediction/form.html:66
+msgid "Submit the form to see a prediction."
+msgstr ""
+
+#: templates/prediction/form.html:71
+msgid "Recent predictions"
+msgstr ""

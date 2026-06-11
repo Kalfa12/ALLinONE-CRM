@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<div class="mx-auto max-w-lg">
+  <div class="app-card p-6">
+    <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-rose-50 text-rose-600">
+      <i data-lucide="trash-2" class="h-6 w-6"></i>
+    </div>
+    <p class="metric-label">{% trans "Confirm delete" %}</p>
+    <h1 class="mt-1 text-2xl font-black text-slate-950">{% trans "Delete" %} {{ object_type }}</h1>
+    <p class="mt-2 text-sm leading-6 text-slate-600">
+      {% trans "This will permanently remove" %} <strong>{{ object }}</strong>.
+    </p>
+    <form method="post" class="mt-5 flex flex-wrap gap-2">
+      {% csrf_token %}
+      <button class="app-button bg-rose-600 text-white hover:bg-rose-700">
+        <i data-lucide="trash-2" class="h-4 w-4"></i>
+        {% trans "Delete" %}
+      </button>
+      <a href="{{ cancel_href }}" class="app-button app-button-soft">{% trans "Cancel" %}</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,7 +1,11 @@
-from datetime import timedelta
+from datetime import datetime, time, timedelta
 from decimal import Decimal
+import shutil
+import subprocess
 
+from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 
@@ -161,7 +165,7 @@ class Command(BaseCommand):
             ('Office Chair Pain Point Testimonial', 'Back-to-Office Evergreen', 'Morning Routine Reset', Creative.MediaType.VIDEO, True),
         ]
         for title, campaign_name, angle_name, media_type, is_winner in creatives:
-            Creative.objects.update_or_create(
+            creative, _ = Creative.objects.update_or_create(
                 title=title,
                 defaults={
                     'campaign': campaigns[campaign_name],
@@ -170,6 +174,15 @@ class Command(BaseCommand):
                     'is_winner': is_winner,
                 },
             )
+            if media_type == Creative.MediaType.VIDEO and not creative.file_is_video:
+                if self.create_demo_video(creative, title, is_winner):
+                    continue
+            if not creative.file:
+                creative.file.save(
+                    f'{self.slugify(title)}.svg',
+                    ContentFile(self.creative_svg(title, media_type, is_winner)),
+                    save=True,
+                )
 
         hooks = [
             ('Your skincare routine is missing the 10 minutes that do the heavy lifting.', Hook.Platform.SOCIAL, Hook.Trigger.CURIOSITY, 'Before/After Transformation', 88),
@@ -256,7 +269,9 @@ class Command(BaseCommand):
                 defaults={
                     'predicted_class': predicted_class,
                     'confidence': confidence,
-                    'created_at': today + timedelta(days=day_offset),
+                    'created_at': timezone.make_aware(
+                        datetime.combine(today + timedelta(days=day_offset), time(hour=9))
+                    ),
                 },
             )
 
@@ -275,3 +290,58 @@ class Command(BaseCommand):
         for role, content in messages:
             if content not in existing:
                 ChatMessage.objects.create(session=session, role=role, content=content)
+
+    def slugify(self, value):
+        return ''.join(ch.lower() if ch.isalnum() else '-' for ch in value).strip('-')
+
+    def creative_svg(self, title, media_type, is_winner):
+        accent = '#10b981' if is_winner else '#4f46e5'
+        label = 'VIDEO' if media_type == Creative.MediaType.VIDEO else 'IMAGE'
+        safe_title = (
+            title.replace('&', '&amp;')
+            .replace('<', '&lt;')
+            .replace('>', '&gt;')
+        )
+        return f'''<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+  <rect width="1280" height="720" fill="#f8fafc"/>
+  <rect x="48" y="48" width="1184" height="624" rx="32" fill="#ffffff" stroke="#e2e8f0" stroke-width="4"/>
+  <circle cx="1080" cy="180" r="96" fill="{accent}" opacity="0.12"/>
+  <circle cx="210" cy="520" r="140" fill="#0ea5e9" opacity="0.10"/>
+  <rect x="110" y="112" width="196" height="52" rx="26" fill="{accent}"/>
+  <text x="208" y="147" font-family="Inter,Arial,sans-serif" font-size="24" font-weight="800" text-anchor="middle" fill="#ffffff">{label}</text>
+  <text x="110" y="280" font-family="Inter,Arial,sans-serif" font-size="54" font-weight="900" fill="#0f172a">{safe_title}</text>
+  <text x="110" y="350" font-family="Inter,Arial,sans-serif" font-size="28" font-weight="600" fill="#64748b">Campaign creative preview</text>
+  <rect x="110" y="470" width="430" height="18" rx="9" fill="#e2e8f0"/>
+  <rect x="110" y="470" width="310" height="18" rx="9" fill="{accent}"/>
+  <text x="110" y="565" font-family="Inter,Arial,sans-serif" font-size="24" font-weight="700" fill="#334155">Marketing CRM Asset Library</text>
+</svg>'''
+
+    def create_demo_video(self, creative, title, is_winner):
+        ffmpeg = shutil.which('ffmpeg')
+        if not ffmpeg:
+            return False
+        output_dir = settings.MEDIA_ROOT / 'creatives'
+        output_dir.mkdir(parents=True, exist_ok=True)
+        filename = f'{self.slugify(title)}.mp4'
+        output_path = output_dir / filename
+        accent = '0x10b981' if is_winner else '0x4f46e5'
+        if not output_path.exists():
+            command = [
+                ffmpeg,
+                '-y',
+                '-f', 'lavfi',
+                '-i', f'color=c={accent}:s=1280x720:d=3',
+                '-f', 'lavfi',
+                '-i', 'anullsrc=channel_layout=stereo:sample_rate=44100',
+                '-shortest',
+                '-vf', 'format=yuv420p',
+                '-movflags', '+faststart',
+                str(output_path),
+            ]
+            try:
+                subprocess.run(command, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            except (OSError, subprocess.CalledProcessError):
+                return False
+        creative.file.name = f'creatives/{filename}'
+        creative.save(update_fields=['file'])
+        return True

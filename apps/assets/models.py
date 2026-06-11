@@ -52,6 +52,14 @@ class Creative(models.Model):
     def __str__(self):
         return self.title
 
+    @property
+    def file_is_video(self):
+        return bool(self.file and self.file.name.lower().endswith(('.mp4', '.webm', '.mov', '.m4v')))
+
+    @property
+    def file_is_image(self):
+        return bool(self.file and self.file.name.lower().endswith(('.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg')))
+
 
 class Hook(models.Model):
     class Platform(models.TextChoices):

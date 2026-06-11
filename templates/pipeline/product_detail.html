@@ -22,6 +22,20 @@
           {{ product.get_status_display }}
         </span>
       </div>
+      <div class="mt-4 flex flex-wrap gap-2">
+        <a href="{% url 'pipeline:product_update' product.pk %}" class="app-button app-button-soft">
+          <i data-lucide="pencil" class="h-4 w-4"></i>
+          {% trans "Edit product" %}
+        </a>
+        <a href="{% url 'pipeline:campaign_create_for_product' product.pk %}" class="app-button app-button-primary">
+          <i data-lucide="megaphone" class="h-4 w-4"></i>
+          {% trans "Add campaign" %}
+        </a>
+        <a href="{% url 'pipeline:product_delete' product.pk %}" class="app-button bg-rose-50 text-rose-700 hover:bg-rose-100">
+          <i data-lucide="trash-2" class="h-4 w-4"></i>
+          {% trans "Delete" %}
+        </a>
+      </div>
     </div>
 
     <div class="grid gap-4 p-5 md:grid-cols-3">
@@ -50,7 +64,9 @@
   <aside class="app-card p-5">
     <div class="mb-4 flex items-center justify-between">
       <h2 class="font-black text-slate-950">{% trans "Campaigns" %}</h2>
-      <i data-lucide="megaphone" class="h-5 w-5 text-indigo-500"></i>
+      <a href="{% url 'pipeline:campaign_create_for_product' product.pk %}" class="text-indigo-600" title="{% trans 'Add campaign' %}">
+        <i data-lucide="plus-circle" class="h-5 w-5"></i>
+      </a>
     </div>
     <div class="space-y-3">
       {% for c in product.campaigns.all %}
@@ -79,6 +95,10 @@
                 {% if c.roi is not None %}{{ c.roi|floatformat:0 }}%{% else %}—{% endif %}
               </div>
             </div>
+          </div>
+          <div class="mt-3 flex gap-2 border-t border-slate-100 pt-3">
+            <a href="{% url 'pipeline:campaign_update' c.pk %}" class="text-xs font-bold text-indigo-600">{% trans "Edit" %}</a>
+            <a href="{% url 'pipeline:campaign_delete' c.pk %}" class="text-xs font-bold text-rose-600">{% trans "Delete" %}</a>
           </div>
         </div>
       {% empty %}

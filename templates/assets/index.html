@@ -1,10 +1,17 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
-<div class="mb-5">
-  <p class="metric-label">{% trans "Creative intelligence" %}</p>
-  <h1 class="text-3xl font-black tracking-tight text-slate-950">{% trans "Marketing Asset Library" %}</h1>
-  <p class="mt-1 text-sm text-slate-500">{% trans "Review tested angles, winning creatives, and reusable hooks." %}</p>
+<div class="mb-5 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+  <div>
+    <p class="metric-label">{% trans "Creative intelligence" %}</p>
+    <h1 class="text-3xl font-black tracking-tight text-slate-950">{% trans "Marketing Asset Library" %}</h1>
+    <p class="mt-1 text-sm text-slate-500">{% trans "Review tested angles, winning creatives, and reusable hooks." %}</p>
+  </div>
+  <div class="flex flex-wrap gap-2">
+    <a href="{% url 'assets:angle_create' %}" class="app-button app-button-soft"><i data-lucide="target" class="h-4 w-4"></i>{% trans "Angle" %}</a>
+    <a href="{% url 'assets:creative_create' %}" class="app-button app-button-primary"><i data-lucide="upload" class="h-4 w-4"></i>{% trans "Creative" %}</a>
+    <a href="{% url 'assets:hook_create' %}" class="app-button app-button-soft"><i data-lucide="quote" class="h-4 w-4"></i>{% trans "Hook" %}</a>
+  </div>
 </div>
 
 <div x-data="{tab: 'angles'}" class="space-y-4">
@@ -41,6 +48,10 @@
         <div class="mt-4 h-2 rounded-full bg-slate-100">
           <div class="h-2 rounded-full {% if a.success_rate >= 80 %}bg-emerald-500{% elif a.success_rate >= 70 %}bg-amber-500{% else %}bg-slate-400{% endif %}" style="width: {{ a.success_rate }}%"></div>
         </div>
+        <div class="mt-4 flex gap-2 border-t border-slate-100 pt-3">
+          <a href="{% url 'assets:angle_update' a.pk %}" class="text-xs font-bold text-indigo-600">{% trans "Edit" %}</a>
+          <a href="{% url 'assets:angle_delete' a.pk %}" class="text-xs font-bold text-rose-600">{% trans "Delete" %}</a>
+        </div>
       </article>
     {% empty %}
       <div class="app-card p-6 text-sm italic text-slate-400">{% trans "Add angles via the admin." %}</div>
@@ -49,23 +60,40 @@
 
   <div x-show="tab==='creatives'" x-cloak class="grid gap-3 md:grid-cols-2">
     {% for c in creatives %}
-      <article class="app-card p-4">
-        <div class="flex gap-4">
-          <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg {% if c.media_type == 'video' %}bg-sky-50 text-sky-600{% else %}bg-violet-50 text-violet-600{% endif %}">
-            <i data-lucide="{% if c.media_type == 'video' %}play-square{% else %}image{% endif %}" class="h-6 w-6"></i>
-          </div>
-          <div class="min-w-0 flex-1">
-            <div class="flex flex-wrap items-center gap-2">
-              <h2 class="font-black text-slate-950">{{ c.title }}</h2>
-              {% if c.is_winner %}
-                <span class="status-pill bg-emerald-50 text-emerald-700">
-                  <i data-lucide="trophy" class="h-3.5 w-3.5"></i>
-                  {% trans "Winner" %}
-                </span>
-              {% endif %}
+      <article class="app-card overflow-hidden">
+        <div class="aspect-video bg-slate-100">
+          {% if c.file and c.file_is_image %}
+            <img src="{{ c.file.url }}" alt="{{ c.title }}" class="h-full w-full object-cover">
+          {% elif c.file and c.file_is_video %}
+            <video src="{{ c.file.url }}" class="h-full w-full object-cover" controls muted preload="metadata"></video>
+          {% else %}
+            <div class="flex h-full items-center justify-center {% if c.media_type == 'video' %}bg-sky-50 text-sky-600{% else %}bg-violet-50 text-violet-600{% endif %}">
+              <i data-lucide="{% if c.media_type == 'video' %}play-square{% else %}image{% endif %}" class="h-10 w-10"></i>
             </div>
-            <p class="mt-1 text-sm text-slate-500">{{ c.get_media_type_display }} · {{ c.campaign.name|default:"No campaign" }}</p>
-            {% if c.angle %}<p class="mt-2 text-xs font-semibold text-indigo-600">{{ c.angle.name }}</p>{% endif %}
+          {% endif %}
+        </div>
+        <div class="p-4">
+          <div class="flex gap-4">
+            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg {% if c.media_type == 'video' %}bg-sky-50 text-sky-600{% else %}bg-violet-50 text-violet-600{% endif %}">
+              <i data-lucide="{% if c.media_type == 'video' %}play-square{% else %}image{% endif %}" class="h-6 w-6"></i>
+            </div>
+            <div class="min-w-0 flex-1">
+              <div class="flex flex-wrap items-center gap-2">
+                <h2 class="font-black text-slate-950">{{ c.title }}</h2>
+                {% if c.is_winner %}
+                  <span class="status-pill bg-emerald-50 text-emerald-700">
+                    <i data-lucide="trophy" class="h-3.5 w-3.5"></i>
+                    {% trans "Winner" %}
+                  </span>
+                {% endif %}
+              </div>
+              <p class="mt-1 text-sm text-slate-500">{{ c.get_media_type_display }} · {% if c.campaign %}{{ c.campaign.name }}{% else %}{% trans "No campaign" %}{% endif %}</p>
+              {% if c.angle %}<p class="mt-2 text-xs font-semibold text-indigo-600">{{ c.angle.name }}</p>{% endif %}
+            </div>
+          </div>
+          <div class="mt-4 flex gap-2 border-t border-slate-100 pt-3">
+            <a href="{% url 'assets:creative_update' c.pk %}" class="text-xs font-bold text-indigo-600">{% trans "Edit" %}</a>
+            <a href="{% url 'assets:creative_delete' c.pk %}" class="text-xs font-bold text-rose-600">{% trans "Delete" %}</a>
           </div>
         </div>
       </article>
@@ -87,6 +115,10 @@
               <span class="status-pill bg-slate-100 text-slate-600">{{ h.get_platform_display }}</span>
               <span class="status-pill bg-indigo-50 text-indigo-700">{{ h.get_trigger_type_display }}</span>
               <span class="status-pill bg-emerald-50 text-emerald-700">{% trans "score" %} {{ h.performance_score|floatformat:0 }}</span>
+            </div>
+            <div class="mt-4 flex gap-2">
+              <a href="{% url 'assets:hook_update' h.pk %}" class="text-xs font-bold text-indigo-600">{% trans "Edit" %}</a>
+              <a href="{% url 'assets:hook_delete' h.pk %}" class="text-xs font-bold text-rose-600">{% trans "Delete" %}</a>
             </div>
           </div>
         </div>

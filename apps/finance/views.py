@@ -2,10 +2,12 @@ from decimal import Decimal
 
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.http import require_http_methods
 
 from apps.pipeline.models import Campaign
 
+from .forms import ExpenseForm, RevenueForm
 from .models import Expense, Revenue
 
 
@@ -35,36 +37,97 @@ def dashboard(request):
     }
     return render(request, 'finance/dashboard.html', {
         'rows': rows,
+        'expenses': Expense.objects.select_related('campaign', 'campaign__product')[:25],
+        'revenues': Revenue.objects.select_related('campaign', 'campaign__product')[:25],
         'totals': totals,
     })
 
 
 @login_required
+@require_http_methods(['GET', 'POST'])
 def expense_create(request):
-    if request.method == 'POST':
-        Expense.objects.create(
-            campaign_id=request.POST['campaign'],
-            amount=request.POST['amount'],
-            category=request.POST.get('category', 'ads'),
-            date=request.POST['date'],
-        )
+    form = ExpenseForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        form.save()
         return redirect('finance:dashboard')
-    return render(request, 'finance/expense_form.html', {
-        'campaigns': Campaign.objects.all(),
-        'categories': Expense.Category.choices,
+    return render(request, 'finance/finance_form.html', {
+        'form': form,
+        'title': 'Log expense',
+        'submit_label': 'Save expense',
+        'tone': 'rose',
     })
 
 
 @login_required
-def revenue_create(request):
-    if request.method == 'POST':
-        Revenue.objects.create(
-            campaign_id=request.POST['campaign'],
-            amount=request.POST['amount'],
-            source=request.POST.get('source', ''),
-            date=request.POST['date'],
-        )
+@require_http_methods(['GET', 'POST'])
+def expense_update(request, pk):
+    expense = get_object_or_404(Expense, pk=pk)
+    form = ExpenseForm(request.POST or None, instance=expense)
+    if request.method == 'POST' and form.is_valid():
+        form.save()
         return redirect('finance:dashboard')
-    return render(request, 'finance/revenue_form.html', {
-        'campaigns': Campaign.objects.all(),
+    return render(request, 'finance/finance_form.html', {
+        'form': form,
+        'title': 'Edit expense',
+        'submit_label': 'Save changes',
+        'tone': 'rose',
+    })
+
+
+@login_required
+@require_http_methods(['GET', 'POST'])
+def expense_delete(request, pk):
+    expense = get_object_or_404(Expense, pk=pk)
+    if request.method == 'POST':
+        expense.delete()
+        return redirect('finance:dashboard')
+    return render(request, 'confirm_delete.html', {
+        'object': expense,
+        'object_type': 'expense',
+        'cancel_href': '/finance/',
+    })
+
+
+@login_required
+@require_http_methods(['GET', 'POST'])
+def revenue_create(request):
+    form = RevenueForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        return redirect('finance:dashboard')
+    return render(request, 'finance/finance_form.html', {
+        'form': form,
+        'title': 'Log revenue',
+        'submit_label': 'Save revenue',
+        'tone': 'emerald',
+    })
+
+
+@login_required
+@require_http_methods(['GET', 'POST'])
+def revenue_update(request, pk):
+    revenue = get_object_or_404(Revenue, pk=pk)
+    form = RevenueForm(request.POST or None, instance=revenue)
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        return redirect('finance:dashboard')
+    return render(request, 'finance/finance_form.html', {
+        'form': form,
+        'title': 'Edit revenue',
+        'submit_label': 'Save changes',
+        'tone': 'emerald',
+    })
+
+
+@login_required
+@require_http_methods(['GET', 'POST'])
+def revenue_delete(request, pk):
+    revenue = get_object_or_404(Revenue, pk=pk)
+    if request.method == 'POST':
+        revenue.delete()
+        return redirect('finance:dashboard')
+    return render(request, 'confirm_delete.html', {
+        'object': revenue,
+        'object_type': 'revenue',
+        'cancel_href': '/finance/',
     })

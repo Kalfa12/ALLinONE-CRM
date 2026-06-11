@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: marketing-crm 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-11 22:34+0000\n"
+"POT-Creation-Date: 2026-06-11 23:32+0000\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,7 +22,7 @@ msgid "Irresistible Offer"
 msgstr "Offre irrésistible"
 
 #: apps/assets/models.py:11 apps/pipeline/models.py:12
-#: apps/pipeline/models.py:44 templates/pipeline/product_form.html:12
+#: apps/pipeline/models.py:44
 msgid "Name"
 msgstr "Nom"
 
@@ -35,12 +35,11 @@ msgstr "Catégorie"
 msgid "Success rate (%)"
 msgstr "Taux de succès (%)"
 
-#: apps/assets/models.py:19
-#| msgid "Angles"
+#: apps/assets/models.py:19 templates/assets/index.html:11
 msgid "Angle"
 msgstr "Angle"
 
-#: apps/assets/models.py:20 templates/assets/index.html:15
+#: apps/assets/models.py:20 templates/assets/index.html:22
 msgid "Angles"
 msgstr "Angles"
 
@@ -65,66 +64,62 @@ msgid "Type"
 msgstr "Type"
 
 #: apps/assets/models.py:44
-#| msgid "Winner"
 msgid "Winner?"
 msgstr "Gagnant ?"
 
-#: apps/assets/models.py:48
-#| msgid "Creatives"
+#: apps/assets/models.py:48 templates/assets/index.html:12
 msgid "Creative"
 msgstr "Créatif"
 
-#: apps/assets/models.py:49 templates/assets/index.html:20
+#: apps/assets/models.py:49 templates/assets/index.html:27
 msgid "Creatives"
 msgstr "Créatifs"
 
-#: apps/assets/models.py:58
+#: apps/assets/models.py:66
 msgid "Social Media"
 msgstr "Réseaux sociaux"
 
-#: apps/assets/models.py:59
+#: apps/assets/models.py:67
 msgid "Search"
 msgstr "Recherche"
 
-#: apps/assets/models.py:60
+#: apps/assets/models.py:68
 msgid "Display"
 msgstr "Affichage"
 
-#: apps/assets/models.py:63
+#: apps/assets/models.py:71
 msgid "Curiosity"
 msgstr "Curiosité"
 
-#: apps/assets/models.py:64
+#: apps/assets/models.py:72
 msgid "Pain Point"
 msgstr "Point de douleur"
 
-#: apps/assets/models.py:65
-#| msgid "Description"
+#: apps/assets/models.py:73
 msgid "Demonstration"
 msgstr "Démonstration"
 
-#: apps/assets/models.py:67
+#: apps/assets/models.py:75
 msgid "Text"
 msgstr "Texte"
 
-#: apps/assets/models.py:68
+#: apps/assets/models.py:76
 msgid "Platform"
 msgstr "Plateforme"
 
-#: apps/assets/models.py:69
+#: apps/assets/models.py:77
 msgid "Trigger"
 msgstr "Déclencheur"
 
-#: apps/assets/models.py:74
+#: apps/assets/models.py:82
 msgid "Performance score"
 msgstr "Score de performance"
 
-#: apps/assets/models.py:77
-#| msgid "Hooks"
+#: apps/assets/models.py:85 templates/assets/index.html:13
 msgid "Hook"
 msgstr "Accroche"
 
-#: apps/assets/models.py:78 templates/assets/index.html:25
+#: apps/assets/models.py:86 templates/assets/index.html:32
 msgid "Hooks"
 msgstr "Accroches"
 
@@ -150,7 +145,6 @@ msgstr "Publicité"
 
 # --- Pipeline ---
 #: apps/finance/models.py:8
-#| msgid "Product Pipeline"
 msgid "Production"
 msgstr "Production"
 
@@ -179,7 +173,6 @@ msgid "Expense"
 msgstr "Dépense"
 
 #: apps/finance/models.py:23
-#| msgid "Expense"
 msgid "Expenses"
 msgstr "Dépenses"
 
@@ -193,7 +186,6 @@ msgid "Revenue"
 msgstr "Revenu"
 
 #: apps/finance/models.py:37
-#| msgid "Revenue"
 msgid "Revenues"
 msgstr "Revenus"
 
@@ -210,29 +202,27 @@ msgstr "Actif"
 msgid "Evaluated"
 msgstr "Évalué"
 
-#: apps/pipeline/models.py:13 templates/pipeline/product_form.html:16
+#: apps/pipeline/models.py:13
 msgid "Description"
 msgstr "Description"
 
-#: apps/pipeline/models.py:15 templates/pipeline/product_form.html:21
+#: apps/pipeline/models.py:15
 msgid "Status"
 msgstr "Statut"
 
-#: apps/pipeline/models.py:17 templates/pipeline/product_form.html:29
+#: apps/pipeline/models.py:17
 msgid "Score"
 msgstr "Score"
 
-#: apps/pipeline/models.py:18 templates/pipeline/product_form.html:34
+#: apps/pipeline/models.py:18
 msgid "Notes"
 msgstr "Notes"
 
 #: apps/pipeline/models.py:27
-#| msgid "New product"
 msgid "Product"
 msgstr "Produit"
 
 #: apps/pipeline/models.py:28 templates/pipeline/kanban.html:21
-#| msgid "No products."
 msgid "Products"
 msgstr "Produits"
 
@@ -241,7 +231,6 @@ msgid "Draft"
 msgstr "Brouillon"
 
 #: apps/pipeline/models.py:38
-#| msgid "Planning"
 msgid "Running"
 msgstr "En cours"
 
@@ -258,7 +247,7 @@ msgid "End date"
 msgstr "Date de fin"
 
 #: apps/pipeline/models.py:47 templates/finance/dashboard.html:71
-#: templates/pipeline/product_detail.html:69
+#: templates/pipeline/product_detail.html:85
 msgid "Budget"
 msgstr "Budget"
 
@@ -269,8 +258,8 @@ msgid "Campaign"
 msgstr "Campagne"
 
 #: apps/pipeline/models.py:54 templates/pipeline/kanban.html:35
-#: templates/pipeline/product_detail.html:33
-#: templates/pipeline/product_detail.html:52
+#: templates/pipeline/product_detail.html:47
+#: templates/pipeline/product_detail.html:66
 msgid "Campaigns"
 msgstr "Campagnes"
 
@@ -287,39 +276,76 @@ msgstr "Français"
 msgid "Arabic"
 msgstr "Arabe"
 
-#: templates/assets/index.html:5
+#: templates/assets/form.html:7
+#| msgid "Commercial workflow"
+msgid "Asset workflow"
+msgstr "Flux des assets"
+
+#: templates/assets/form.html:12 templates/confirm_delete.html:20
+#: templates/finance/finance_form.html:12
+#: templates/pipeline/campaign_form.html:13
+#: templates/pipeline/product_form.html:12
+#| msgid "Finance"
+msgid "Cancel"
+msgstr "Annuler"
+
+#: templates/assets/form.html:19
+msgid "Current media"
+msgstr "Média actuel"
+
+#: templates/assets/index.html:6
 msgid "Creative intelligence"
 msgstr "Intelligence créative"
 
 # --- Assets ---
-#: templates/assets/index.html:6
+#: templates/assets/index.html:7
 msgid "Marketing Asset Library"
 msgstr "Bibliothèque d'Assets Marketing"
 
-#: templates/assets/index.html:7
+#: templates/assets/index.html:8
 msgid "Review tested angles, winning creatives, and reusable hooks."
 msgstr ""
 "Analysez les angles testés, les créations gagnantes et les accroches "
 "réutilisables."
 
-#: templates/assets/index.html:46
+#: templates/assets/index.html:52 templates/assets/index.html:95
+#: templates/assets/index.html:120 templates/finance/dashboard.html:94
+#: templates/finance/dashboard.html:120 templates/finance/dashboard.html:145
+#: templates/pipeline/product_detail.html:100
+msgid "Edit"
+msgstr "Modifier"
+
+#: templates/assets/index.html:53 templates/assets/index.html:96
+#: templates/assets/index.html:121 templates/confirm_delete.html:10
+#: templates/confirm_delete.html:18 templates/finance/dashboard.html:121
+#: templates/finance/dashboard.html:146
+#: templates/pipeline/product_detail.html:36
+#: templates/pipeline/product_detail.html:101
+msgid "Delete"
+msgstr "Supprimer"
+
+#: templates/assets/index.html:57
 msgid "Add angles via the admin."
 msgstr "Ajoutez des angles via l'administration."
 
-#: templates/assets/index.html:63
+#: templates/assets/index.html:86
 msgid "Winner"
 msgstr "Gagnant"
 
-#: templates/assets/index.html:73
+#: templates/assets/index.html:90
+#| msgid "campaigns"
+msgid "No campaign"
+msgstr "Aucune campagne"
+
+#: templates/assets/index.html:101
 msgid "No creatives yet."
 msgstr "Aucun créatif pour le moment."
 
-#: templates/assets/index.html:89
-#| msgid "Score"
+#: templates/assets/index.html:117
 msgid "score"
 msgstr "score"
 
-#: templates/assets/index.html:95
+#: templates/assets/index.html:127
 msgid "No hooks yet."
 msgstr "Aucune accroche pour le moment."
 
@@ -369,7 +395,6 @@ msgid "Close"
 msgstr "Fermer"
 
 #: templates/chatbot/widget.html:35
-#| msgid "Ask about campaigns, ROI, angles…"
 msgid "Ask about campaigns, ROI, creatives, or product potential."
 msgstr ""
 "Posez une question sur les campagnes, le ROI, les créations ou le potentiel "
@@ -382,6 +407,15 @@ msgstr "Réflexion"
 #: templates/chatbot/widget.html:44
 msgid "Ask about campaigns, ROI, angles…"
 msgstr "Posez une question sur les campagnes, le ROI, les angles…"
+
+#: templates/confirm_delete.html:9
+#| msgid "Confidence"
+msgid "Confirm delete"
+msgstr "Confirmer la suppression"
+
+#: templates/confirm_delete.html:12
+msgid "This will permanently remove"
+msgstr "Cela supprimera définitivement"
 
 #: templates/finance/dashboard.html:6
 msgid "Performance control"
@@ -407,7 +441,6 @@ msgid "Total revenue"
 msgstr "Total des revenus"
 
 #: templates/finance/dashboard.html:39
-#| msgid "New product"
 msgid "Net profit"
 msgstr "Profit net"
 
@@ -420,7 +453,6 @@ msgid "Campaign profitability"
 msgstr "Rentabilité des campagnes"
 
 #: templates/finance/dashboard.html:59
-#| msgid "No campaigns yet."
 msgid "campaigns tracked"
 msgstr "campagnes suivies"
 
@@ -429,22 +461,47 @@ msgid "Live data"
 msgstr "Données en direct"
 
 #: templates/finance/dashboard.html:72
-#: templates/pipeline/product_detail.html:73
+#: templates/pipeline/product_detail.html:89
 msgid "Spent"
 msgstr "Dépensé"
 
 #: templates/finance/dashboard.html:74
-#: templates/pipeline/product_detail.html:77
+#: templates/pipeline/product_detail.html:93
 msgid "ROI"
 msgstr "ROI"
 
-#: templates/finance/dashboard.html:94
-#: templates/pipeline/product_detail.html:85
+#: templates/finance/dashboard.html:75
+#| msgid "Active"
+msgid "Actions"
+msgstr "Actions"
+
+#: templates/finance/dashboard.html:98
+#: templates/pipeline/product_detail.html:105
 msgid "No campaigns yet."
 msgstr "Aucune campagne pour le moment."
 
-#: templates/finance/expense_form.html:6 templates/finance/revenue_form.html:6
-#| msgid "Finance"
+#: templates/finance/dashboard.html:108
+#| msgid "Expense"
+msgid "Expense ledger"
+msgstr "Journal des dépenses"
+
+#: templates/finance/dashboard.html:126
+#| msgid "Log expense"
+msgid "No expenses yet."
+msgstr "Aucune dépense pour le moment."
+
+#: templates/finance/dashboard.html:133
+#| msgid "Revenue"
+msgid "Revenue ledger"
+msgstr "Journal des revenus"
+
+#: templates/finance/dashboard.html:151
+#| msgid "No creatives yet."
+msgid "No revenue yet."
+msgstr "Aucun revenu pour le moment."
+
+#: templates/finance/expense_form.html:6 templates/finance/finance_form.html:7
+#: templates/finance/revenue_form.html:6
 msgid "Finance input"
 msgstr "Saisie finance"
 
@@ -461,6 +518,11 @@ msgstr "Enregistrer"
 msgid "Log revenue"
 msgstr "Saisir un revenu"
 
+#: templates/pipeline/campaign_form.html:7
+#| msgid "Campaigns"
+msgid "Campaign setup"
+msgstr "Configuration de campagne"
+
 #: templates/pipeline/kanban.html:7
 msgid "Commercial workflow"
 msgstr "Flux commercial"
@@ -475,7 +537,7 @@ msgid "Track product ideas from validation to campaign performance."
 msgstr ""
 "Suivez les idées produit de la validation à la performance des campagnes."
 
-#: templates/pipeline/kanban.html:14 templates/pipeline/product_form.html:7
+#: templates/pipeline/kanban.html:14
 msgid "New product"
 msgstr "Nouveau produit"
 
@@ -484,7 +546,6 @@ msgid "Avg. score"
 msgstr "Score moyen"
 
 #: templates/pipeline/kanban.html:83
-#| msgid "Campaigns"
 msgid "campaigns"
 msgstr "campagnes"
 
@@ -502,32 +563,36 @@ msgstr "Retour au pipeline"
 
 # --- Prediction ---
 #: templates/pipeline/product_detail.html:14
-#| msgid "Product Potential Predictor"
 msgid "Product record"
 msgstr "Fiche produit"
 
+#: templates/pipeline/product_detail.html:28
+#| msgid "New product"
+msgid "Edit product"
+msgstr "Modifier le produit"
+
+#: templates/pipeline/product_detail.html:32
+#: templates/pipeline/product_detail.html:67
+#| msgid "campaigns"
+msgid "Add campaign"
+msgstr "Ajouter une campagne"
+
 # --- Prediction ---
-#: templates/pipeline/product_detail.html:29
-#| msgid "Product Potential Predictor"
+#: templates/pipeline/product_detail.html:43
 msgid "Potential score"
 msgstr "Score potentiel"
 
-#: templates/pipeline/product_detail.html:37
+#: templates/pipeline/product_detail.html:51
 msgid "Owner"
 msgstr "Responsable"
 
-#: templates/pipeline/product_detail.html:44
+#: templates/pipeline/product_detail.html:58
 msgid "Strategic notes"
 msgstr "Notes stratégiques"
 
-#: templates/pipeline/product_form.html:6
-#| msgid "Pipeline"
+#: templates/pipeline/product_form.html:7
 msgid "Pipeline input"
 msgstr "Saisie pipeline"
-
-#: templates/pipeline/product_form.html:39
-msgid "Create"
-msgstr "Créer"
 
 #: templates/prediction/form.html:5
 msgid "AI assisted decisioning"
@@ -539,9 +604,6 @@ msgid "Product Potential Predictor"
 msgstr "Prédicteur de Potentiel Produit"
 
 #: templates/prediction/form.html:7
-#| msgid ""
-#| "Estimate the potential of a new product (Low / Medium / High) using a "
-#| "Random Forest model trained on historical campaign data."
 msgid ""
 "Estimate the potential of a new product using a Random Forest model trained "
 "on historical campaign data."
@@ -569,7 +631,6 @@ msgstr "CTR initial (0-1)"
 
 # --- Prediction ---
 #: templates/prediction/form.html:53
-#| msgid "Product Potential Predictor"
 msgid "Predicted potential"
 msgstr "Potentiel prédit"
 

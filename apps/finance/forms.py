@@ -21,6 +21,7 @@ class ExpenseForm(StyledFormMixin, forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._style_fields()
+        self.fields['amount'].label = 'Amount (MAD)'
 
 
 class RevenueForm(StyledFormMixin, forms.ModelForm):
@@ -34,3 +35,4 @@ class RevenueForm(StyledFormMixin, forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._style_fields()
+        self.fields['amount'].label = 'Amount (MAD)'

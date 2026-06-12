@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: marketing-crm 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-11 23:32+0000\n"
+"POT-Creation-Date: 2026-06-11 23:58+0000\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -276,7 +276,6 @@ msgid "Arabic"
 msgstr "العربية"
 
 #: templates/assets/form.html:7
-#| msgid "Commercial workflow"
 msgid "Asset workflow"
 msgstr "سير عمل الأصول"
 
@@ -284,7 +283,6 @@ msgstr "سير عمل الأصول"
 #: templates/finance/finance_form.html:12
 #: templates/pipeline/campaign_form.html:13
 #: templates/pipeline/product_form.html:12
-#| msgid "Finance"
 msgid "Cancel"
 msgstr "إلغاء"
 
@@ -330,7 +328,6 @@ msgid "Winner"
 msgstr "الفائز"
 
 #: templates/assets/index.html:90
-#| msgid "campaigns"
 msgid "No campaign"
 msgstr "لا توجد حملة"
 
@@ -347,9 +344,13 @@ msgid "No hooks yet."
 msgstr "لا توجد جمل افتتاحية بعد."
 
 #: templates/auth/login.html:3 templates/auth/login.html:28
-#: templates/base.html:80
+#: templates/base.html:81
 msgid "Login"
 msgstr "تسجيل الدخول"
+
+#: templates/auth/login.html:8 templates/base.html:35
+msgid "LaunchPilot CRM logo"
+msgstr "شعار LaunchPilot CRM"
 
 #: templates/auth/login.html:10
 msgid "Sign in"
@@ -359,22 +360,18 @@ msgstr "تسجيل الدخول"
 msgid "Access the marketing CRM workspace."
 msgstr "ادخل إلى مساحة عمل إدارة التسويق."
 
-#: templates/base.html:7 templates/base.html:37
-#: templates/pipeline/kanban.html:3
-msgid "Marketing CRM"
-msgstr "نظام إدارة التسويق"
+#: templates/base.html:7 templates/base.html:38 templates/base.html:108
+msgid "LaunchPilot CRM"
+msgstr "LaunchPilot CRM"
 
-#: templates/base.html:38
-msgid "Campaign command center"
-msgstr "مركز قيادة الحملات"
+#: templates/base.html:39
+#| msgid "Campaign command center"
+msgid "E-commerce launch command center"
+msgstr "مركز قيادة إطلاقات التجارة الإلكترونية"
 
-#: templates/base.html:74 templates/base.html:76
+#: templates/base.html:75 templates/base.html:77
 msgid "Logout"
 msgstr "تسجيل الخروج"
-
-#: templates/base.html:107
-msgid "Marketing Campaign & Asset Management CRM"
-msgstr "نظام إدارة الحملات التسويقية والأصول الإعلانية"
 
 #: templates/chatbot/widget.html:5 templates/chatbot/widget.html:6
 #: templates/chatbot/widget.html:18
@@ -402,7 +399,6 @@ msgid "Ask about campaigns, ROI, angles…"
 msgstr "اسأل عن الحملات أو العائد أو الزوايا…"
 
 #: templates/confirm_delete.html:9
-#| msgid "Confidence"
 msgid "Confirm delete"
 msgstr "تأكيد الحذف"
 
@@ -461,7 +457,6 @@ msgid "ROI"
 msgstr "العائد على الاستثمار"
 
 #: templates/finance/dashboard.html:75
-#| msgid "Active"
 msgid "Actions"
 msgstr "إجراءات"
 
@@ -471,22 +466,18 @@ msgid "No campaigns yet."
 msgstr "لا توجد حملات بعد."
 
 #: templates/finance/dashboard.html:108
-#| msgid "Expense"
 msgid "Expense ledger"
 msgstr "سجل المصاريف"
 
 #: templates/finance/dashboard.html:126
-#| msgid "Log expense"
 msgid "No expenses yet."
 msgstr "لا توجد مصاريف بعد."
 
 #: templates/finance/dashboard.html:133
-#| msgid "Revenue"
 msgid "Revenue ledger"
 msgstr "سجل الإيرادات"
 
 #: templates/finance/dashboard.html:151
-#| msgid "No creatives yet."
 msgid "No revenue yet."
 msgstr "لا توجد إيرادات بعد."
 
@@ -509,9 +500,12 @@ msgid "Log revenue"
 msgstr "تسجيل إيراد"
 
 #: templates/pipeline/campaign_form.html:7
-#| msgid "Campaigns"
 msgid "Campaign setup"
 msgstr "إعداد الحملة"
+
+#: templates/pipeline/kanban.html:3
+msgid "Marketing CRM"
+msgstr "نظام إدارة التسويق"
 
 #: templates/pipeline/kanban.html:7
 msgid "Commercial workflow"
@@ -554,13 +548,11 @@ msgid "Product record"
 msgstr "سجل المنتج"
 
 #: templates/pipeline/product_detail.html:28
-#| msgid "New product"
 msgid "Edit product"
 msgstr "تعديل المنتج"
 
 #: templates/pipeline/product_detail.html:32
 #: templates/pipeline/product_detail.html:67
-#| msgid "campaigns"
 msgid "Add campaign"
 msgstr "إضافة حملة"
 

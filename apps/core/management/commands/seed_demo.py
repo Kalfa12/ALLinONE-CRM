@@ -313,7 +313,7 @@ class Command(BaseCommand):
   <text x="110" y="350" font-family="Inter,Arial,sans-serif" font-size="28" font-weight="600" fill="#64748b">Campaign creative preview</text>
   <rect x="110" y="470" width="430" height="18" rx="9" fill="#e2e8f0"/>
   <rect x="110" y="470" width="310" height="18" rx="9" fill="{accent}"/>
-  <text x="110" y="565" font-family="Inter,Arial,sans-serif" font-size="24" font-weight="700" fill="#334155">Marketing CRM Asset Library</text>
+  <text x="110" y="565" font-family="Inter,Arial,sans-serif" font-size="24" font-weight="700" fill="#334155">LaunchPilot CRM Asset Library</text>
 </svg>'''
 
     def create_demo_video(self, creative, title, is_winner):

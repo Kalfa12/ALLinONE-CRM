@@ -36,6 +36,7 @@ class CampaignForm(StyledFormMixin, forms.ModelForm):
     def __init__(self, *args, product=None, **kwargs):
         super().__init__(*args, **kwargs)
         self._style_fields()
+        self.fields['budget'].label = 'Budget (MAD)'
         if product is not None:
             self.fields['product'].initial = product
             self.fields['product'].widget = forms.HiddenInput()

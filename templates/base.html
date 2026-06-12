@@ -1,10 +1,11 @@
-{% load i18n %}
+{% load i18n static %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}{% trans "Marketing CRM" %}{% endblock %}</title>
+  <title>{% block title %}{% trans "LaunchPilot CRM" %}{% endblock %}</title>
+  <link rel="icon" href="{% static 'brand/launchpilot-logo.png' %}">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
   <script src="https://unpkg.com/htmx.org@1.9.12" defer></script>
@@ -30,12 +31,12 @@
 <header class="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur">
   <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
     <a href="{% url 'pipeline:kanban' %}" class="flex items-center gap-2 min-w-fit">
-      <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-indigo-600 text-white shadow-sm">
-        <i data-lucide="chart-no-axes-combined" class="h-5 w-5"></i>
+        <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-white shadow-sm ring-1 ring-slate-200">
+        <img src="{% static 'brand/launchpilot-logo.png' %}" alt="{% trans 'LaunchPilot CRM logo' %}" class="h-8 w-8 object-contain">
       </span>
       <span>
-        <span class="block text-sm font-black text-slate-950 leading-4">{% trans "Marketing CRM" %}</span>
-        <span class="block text-[11px] font-medium text-slate-500 leading-4">{% trans "Campaign command center" %}</span>
+        <span class="block text-sm font-black text-slate-950 leading-4">{% trans "LaunchPilot CRM" %}</span>
+        <span class="block text-[11px] font-medium text-slate-500 leading-4">{% trans "E-commerce launch command center" %}</span>
       </span>
     </a>
     {% if user.is_authenticated %}
@@ -104,7 +105,7 @@
 </main>
 
 <footer class="border-t border-slate-200 bg-white py-4 text-center text-xs text-slate-400">
-  © 2026 — {% trans "Marketing Campaign & Asset Management CRM" %}
+  © 2026 — {% trans "LaunchPilot CRM" %}
 </footer>
 
 {% if user.is_authenticated %}

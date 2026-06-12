@@ -25,21 +25,21 @@
       <span class="metric-label">{% trans "Total spent" %}</span>
       <i data-lucide="credit-card" class="h-4 w-4 text-rose-500"></i>
     </div>
-    <div class="mt-2 text-2xl font-black text-rose-600">{{ totals.spent|intcomma }}</div>
+    <div class="mt-2 text-2xl font-black text-rose-600">{{ totals.spent|intcomma }} MAD</div>
   </div>
   <div class="app-card p-4">
     <div class="flex items-center justify-between">
       <span class="metric-label">{% trans "Total revenue" %}</span>
       <i data-lucide="badge-dollar-sign" class="h-4 w-4 text-emerald-500"></i>
     </div>
-    <div class="mt-2 text-2xl font-black text-emerald-600">{{ totals.revenue|intcomma }}</div>
+    <div class="mt-2 text-2xl font-black text-emerald-600">{{ totals.revenue|intcomma }} MAD</div>
   </div>
   <div class="app-card p-4">
     <div class="flex items-center justify-between">
       <span class="metric-label">{% trans "Net profit" %}</span>
       <i data-lucide="trending-up" class="h-4 w-4 text-sky-500"></i>
     </div>
-    <div class="mt-2 text-2xl font-black text-slate-950">{{ totals.profit|intcomma }}</div>
+    <div class="mt-2 text-2xl font-black text-slate-950">{{ totals.profit|intcomma }} MAD</div>
   </div>
   <div class="app-card p-4">
     <div class="flex items-center justify-between">
@@ -68,9 +68,9 @@
       <thead class="bg-slate-50 text-left text-xs uppercase text-slate-500">
         <tr>
           <th class="px-4 py-3">{% trans "Campaign" %}</th>
-          <th class="px-4 py-3 text-right">{% trans "Budget" %}</th>
-          <th class="px-4 py-3 text-right">{% trans "Spent" %}</th>
-          <th class="px-4 py-3 text-right">{% trans "Revenue" %}</th>
+          <th class="px-4 py-3 text-right">{% trans "Budget" %} (MAD)</th>
+          <th class="px-4 py-3 text-right">{% trans "Spent" %} (MAD)</th>
+          <th class="px-4 py-3 text-right">{% trans "Revenue" %} (MAD)</th>
           <th class="px-4 py-3 text-right">{% trans "ROI" %}</th>
           <th class="px-4 py-3 text-right">{% trans "Actions" %}</th>
         </tr>
@@ -82,9 +82,9 @@
               <div class="font-semibold text-slate-950">{{ r.campaign.name }}</div>
               <div class="text-xs text-slate-500">{{ r.campaign.product.name }} · {{ r.campaign.get_status_display }}</div>
             </td>
-            <td class="px-4 py-3 text-right tabular-nums text-slate-600">{{ r.budget|intcomma }}</td>
-            <td class="px-4 py-3 text-right tabular-nums font-semibold text-rose-600">{{ r.spent|intcomma }}</td>
-            <td class="px-4 py-3 text-right tabular-nums font-semibold text-emerald-600">{{ r.revenue|intcomma }}</td>
+            <td class="px-4 py-3 text-right tabular-nums text-slate-600">{{ r.budget|intcomma }} MAD</td>
+            <td class="px-4 py-3 text-right tabular-nums font-semibold text-rose-600">{{ r.spent|intcomma }} MAD</td>
+            <td class="px-4 py-3 text-right tabular-nums font-semibold text-emerald-600">{{ r.revenue|intcomma }} MAD</td>
             <td class="px-4 py-3 text-right">
               <span class="status-pill {% if r.roi and r.roi >= 0 %}bg-emerald-50 text-emerald-700{% else %}bg-rose-50 text-rose-700{% endif %}">
                 {% if r.roi is not None %}{{ r.roi|floatformat:1 }}%{% else %}—{% endif %}
@@ -115,7 +115,7 @@
             <div class="text-xs text-slate-500">{{ expense.get_category_display }} · {{ expense.date }}</div>
           </div>
           <div class="text-right">
-            <div class="font-black text-rose-600">{{ expense.amount|intcomma }}</div>
+            <div class="font-black text-rose-600">{{ expense.amount|intcomma }} MAD</div>
             <div class="mt-1 flex justify-end gap-2">
               <a href="{% url 'finance:expense_update' expense.pk %}" class="text-xs font-bold text-indigo-600">{% trans "Edit" %}</a>
               <a href="{% url 'finance:expense_delete' expense.pk %}" class="text-xs font-bold text-rose-600">{% trans "Delete" %}</a>
@@ -140,7 +140,7 @@
             <div class="text-xs text-slate-500">{{ revenue.source|default:"Direct sales" }} · {{ revenue.date }}</div>
           </div>
           <div class="text-right">
-            <div class="font-black text-emerald-600">{{ revenue.amount|intcomma }}</div>
+            <div class="font-black text-emerald-600">{{ revenue.amount|intcomma }} MAD</div>
             <div class="mt-1 flex justify-end gap-2">
               <a href="{% url 'finance:revenue_update' revenue.pk %}" class="text-xs font-bold text-indigo-600">{% trans "Edit" %}</a>
               <a href="{% url 'finance:revenue_delete' revenue.pk %}" class="text-xs font-bold text-rose-600">{% trans "Delete" %}</a>
